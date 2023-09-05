@@ -9,10 +9,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 class MoneyPayload
 {
     #[OA\Property(example: 100)]
-    #[Assert\PositiveOrZero]
+    #[Assert\NotBlank]
+    #[Assert\Positive]
     public int $amount;
 
     #[OA\Property(example: 'EUR')]
+    #[Assert\NotBlank]
     #[Assert\Currency]
     public string $currency;
 }
