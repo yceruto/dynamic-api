@@ -2,12 +2,14 @@
 
 namespace App;
 
-use App\Product\Domain\Model\ProductId;
 use App\Shared\Presentation\OpenApi\Analyser\AttributeAnnotationFactory;
+use App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher;
+use App\Shared\Presentation\OpenApi\Processor\PathPublisherProcessor;
 use OpenApi\Analysers\DocBlockAnnotationFactory;
 use OpenApi\Analysers\ReflectionAnalyser;
 use OpenApi\Attributes as OA;
 use OpenApi\Generator;
+use OpenApi\Processors;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,13 +29,32 @@ class Kernel extends BaseKernel
     }
 
     #[Route('/swagger.json')]
-    public function swagger(): JsonResponse
+    public function swagger(PathPublisherProcessor $pathDeciderProcessor): JsonResponse
     {
         $openApi = Generator::scan([__DIR__], [
             'analyser' => new ReflectionAnalyser([
                 new DocBlockAnnotationFactory(),
                 new AttributeAnnotationFactory(),
             ]),
+            'processors' => [
+                new Processors\DocBlockDescriptions(),
+                new Processors\MergeIntoOpenApi(),
+                new Processors\MergeIntoComponents(),
+                new Processors\ExpandClasses(),
+                new Processors\ExpandInterfaces(),
+                new Processors\ExpandTraits(),
+                new Processors\ExpandEnums(),
+                new Processors\AugmentSchemas(),
+                new Processors\AugmentProperties(),
+                new Processors\BuildPaths(),
+                new Processors\AugmentParameters(),
+                new Processors\AugmentRefs(),
+                new Processors\MergeJsonContent(),
+                new Processors\MergeXmlContent(),
+                new Processors\OperationId(),
+                new Processors\CleanUnmerged(),
+                $pathDeciderProcessor,
+            ],
         ]) ?? throw new NotFoundHttpException();
 
         $openApi->servers = [

@@ -13,7 +13,6 @@ trait ApiRouteTrait
     public function __construct(
         // OpenAPI Path properties
         string $path,
-        string $operationId = null,
         string $description = null,
         string $summary = null,
         array $security = null,
@@ -44,7 +43,7 @@ trait ApiRouteTrait
     ) {
         parent::__construct(
             $path,
-            $operationId,
+            $name,
             $description,
             $summary,
             $security,

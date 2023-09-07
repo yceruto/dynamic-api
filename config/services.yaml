@@ -5,11 +5,17 @@ services:
         autowire: true
         autoconfigure: true
 
+    _instanceof:
+        App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher:
+            tags: ['api.path_publisher']
+
     App\:
         resource: '../src/'
         exclude:
             - '../src/Presentation/'
             - '../src/Kernel.php'
+
+    App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher: '@App\Shared\Presentation\OpenApi\Processor\Path\PathPublisherChain'
 
     routing.loader.attribute.post:
         class: App\Shared\Presentation\Routing\OpenAPIRouteControllerLoader
