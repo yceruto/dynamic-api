@@ -4,6 +4,7 @@ namespace App\Product\Presentation\Controller\Post;
 
 use App\Shared\Presentation\Request\Model\MoneyPayload;
 use OpenApi\Attributes as OA;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[OA\Schema]
@@ -19,6 +20,7 @@ class PostProductPayload
     public string $name;
 
     #[OA\Property]
-    #[Assert\Valid]
+    #[Assert\Valid(groups: ['price'])]
+    #[Groups('price')]
     public MoneyPayload $price;
 }

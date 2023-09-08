@@ -2,6 +2,8 @@
 
 namespace App\Shared\Presentation\Response;
 
+use App\Shared\Presentation\Serializer\GroupProvider;
+use DomainException;
 use OpenApi\Annotations\Operation;
 use OpenApi\Attributes as OA;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -13,8 +15,10 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 readonly class ControllerResultSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private SerializerInterface $serializer)
-    {
+    public function __construct(
+        private SerializerInterface $serializer,
+        private GroupProvider $provider,
+    ) {
     }
 
     public function onKernelView(ViewEvent $event): void
@@ -34,7 +38,13 @@ readonly class ControllerResultSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $content = $this->serializer->serialize($result, 'json');
+        try {
+            $groups = $this->provider->groups($result);
+        } catch (DomainException) {
+        }
+        $groups[] = 'default';
+
+        $content = $this->serializer->serialize($result, 'json', ['groups' => $groups]);
         $statusCode = $this->guessStatusCode($event->controllerArgumentsEvent->getAttributes());
         $event->setResponse(new JsonResponse($content, $statusCode, json: true));
     }

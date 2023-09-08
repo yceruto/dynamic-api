@@ -4,14 +4,17 @@ namespace App\Shared\Domain\View;
 
 use Money\Money;
 use OpenApi\Attributes as OA;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[OA\Schema]
 readonly class MoneyView
 {
     #[OA\Property(example: 100)]
+    #[Groups('money')]
     public int $amount;
 
     #[OA\Property(example: 'EUR')]
+    #[Groups('money')]
     public string $currency;
 
     public static function create(Money $money): self

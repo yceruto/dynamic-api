@@ -9,6 +9,9 @@ services:
         App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher:
             tags: ['api.path_publisher']
 
+        App\Shared\Presentation\Serializer\GroupProvider:
+            tags: ['api.group_provider']
+
     App\:
         resource: '../src/'
         exclude:
@@ -16,6 +19,7 @@ services:
             - '../src/Kernel.php'
 
     App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher: '@App\Shared\Presentation\OpenApi\Processor\Path\PathPublisherChain'
+    App\Shared\Presentation\Serializer\GroupProvider: '@App\Shared\Presentation\Serializer\GroupProviderChain'
 
     routing.loader.attribute.post:
         class: App\Shared\Presentation\Routing\OpenAPIRouteControllerLoader

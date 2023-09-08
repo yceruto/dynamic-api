@@ -8,6 +8,6 @@ class ProductPathPublisher implements PathPublisher
 {
     public function publish(string $pathId, array $context): bool
     {
-        return 'product_get' !== $pathId;
+        return true; //'product_get' !== $pathId;
     }
 }

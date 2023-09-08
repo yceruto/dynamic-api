@@ -3,19 +3,24 @@
 namespace App\Product\Domain\View;
 
 use App\Product\Domain\Model\Product;
+use App\Shared\Domain\View\MoneyAware;
 use App\Shared\Domain\View\MoneyView;
 use OpenApi\Attributes as OA;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[OA\Schema]
-readonly class ProductView
+readonly class ProductView implements MoneyAware
 {
     #[OA\Property(format: 'uuid')]
+    #[Groups('default')]
     public string $id;
 
     #[OA\Property]
+    #[Groups('default')]
     public string $name;
 
     #[OA\Property]
+    #[Groups('money')]
     public MoneyView $price;
 
     /**
