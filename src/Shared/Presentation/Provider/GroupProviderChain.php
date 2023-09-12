@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Shared\Presentation\Serializer;
+namespace App\Shared\Presentation\Provider;
 
-use DomainException;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
-use Symfony\Component\Validator\Constraints\GroupSequence;
 
 readonly class GroupProviderChain implements GroupProvider
 {
@@ -14,9 +12,9 @@ readonly class GroupProviderChain implements GroupProvider
     ) {
     }
 
-    public function groups(object $object): array|GroupSequence
+    public function groups(object $object): array
     {
-        $groups = [];
+        $groups = [['Default']];
         foreach ($this->providers as $provider) {
             $groups[] = $provider->groups($object);
         }

@@ -2,8 +2,8 @@
 
 namespace App\Shared\Presentation\OpenApi\Analyser;
 
-use App\Shared\Presentation\Request\Attributes\Payload;
-use App\Shared\Presentation\Request\Attributes\Query;
+use App\Shared\Presentation\Request\Attribute\Payload;
+use App\Shared\Presentation\Request\Attribute\Query;
 use OpenApi\Annotations\Operation;
 use OpenApi\Attributes as OA;
 use OpenApi\Context;

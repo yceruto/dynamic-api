@@ -5,7 +5,7 @@ namespace App\Product\Presentation\Controller\Post;
 use App\Product\Application\Create\CreateProductCommand;
 use App\Product\Domain\View\ProductView;
 use App\Shared\Presentation\Controller\CommandAction;
-use App\Shared\Presentation\Request\Attributes\Payload;
+use App\Shared\Presentation\Request\Attribute\Payload;
 use App\Shared\Presentation\Routing\Attribute\Post;
 use Money\Currency;
 use Money\Money;

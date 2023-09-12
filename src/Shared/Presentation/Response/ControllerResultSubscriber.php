@@ -2,8 +2,7 @@
 
 namespace App\Shared\Presentation\Response;
 
-use App\Shared\Presentation\Serializer\GroupProvider;
-use DomainException;
+use App\Shared\Presentation\Provider\GroupProvider;
 use OpenApi\Annotations\Operation;
 use OpenApi\Attributes as OA;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -38,12 +37,7 @@ readonly class ControllerResultSubscriber implements EventSubscriberInterface
             return;
         }
 
-        try {
-            $groups = $this->provider->groups($result);
-        } catch (DomainException) {
-        }
-        $groups[] = 'default';
-
+        $groups = $this->provider->groups($result);
         $content = $this->serializer->serialize($result, 'json', ['groups' => $groups]);
         $statusCode = $this->guessStatusCode($event->controllerArgumentsEvent->getAttributes());
         $event->setResponse(new JsonResponse($content, $statusCode, json: true));

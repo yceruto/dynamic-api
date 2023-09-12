@@ -10,11 +10,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 readonly class MoneyView
 {
     #[OA\Property(example: 100)]
-    #[Groups('money')]
+    #[Groups('Money')]
     public int $amount;
 
     #[OA\Property(example: 'EUR')]
-    #[Groups('money')]
+    #[Groups('Money')]
     public string $currency;
 
     public static function create(Money $money): self

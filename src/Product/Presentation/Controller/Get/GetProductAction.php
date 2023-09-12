@@ -5,7 +5,7 @@ namespace App\Product\Presentation\Controller\Get;
 use App\Product\Application\Find\One\FindProductQuery;
 use App\Product\Domain\View\ProductView;
 use App\Shared\Presentation\Controller\QueryAction;
-use App\Shared\Presentation\Request\Attributes\Path;
+use App\Shared\Presentation\Request\Attribute\Path;
 use App\Shared\Presentation\Routing\Attribute\Get;
 
 class GetProductAction extends QueryAction

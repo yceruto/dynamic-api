@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Presentation\Request\Attributes;
+namespace App\Shared\Presentation\Request\Attribute;
 
 use OpenApi\Attributes\PathParameter;
 

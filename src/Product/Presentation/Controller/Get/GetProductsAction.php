@@ -5,7 +5,7 @@ namespace App\Product\Presentation\Controller\Get;
 use App\Product\Application\Find\Search\SearchProductsQuery;
 use App\Product\Domain\View\ProductView;
 use App\Shared\Presentation\Controller\QueryAction;
-use App\Shared\Presentation\Request\Attributes\Query;
+use App\Shared\Presentation\Request\Attribute\Query;
 use App\Shared\Presentation\Routing\Attribute\Get;
 use OpenApi\Attributes\Items;
 use OpenApi\Attributes\JsonContent;

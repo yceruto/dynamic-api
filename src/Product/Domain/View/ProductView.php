@@ -12,15 +12,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 readonly class ProductView implements MoneyAware
 {
     #[OA\Property(format: 'uuid')]
-    #[Groups('default')]
+    #[Groups('Default')]
     public string $id;
 
     #[OA\Property]
-    #[Groups('default')]
+    #[Groups('Default')]
     public string $name;
 
     #[OA\Property]
-    #[Groups('money')]
+    #[Groups('Money')]
     public MoneyView $price;
 
     /**
