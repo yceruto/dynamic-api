@@ -2,6 +2,7 @@
 
 namespace App\Product\Presentation\PathPublisher;
 
+use App\Shared\Domain\Error\EndpointDisabledError;
 use App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher;
 
 readonly class ProductPathPublisher implements PathPublisher
@@ -10,8 +11,10 @@ readonly class ProductPathPublisher implements PathPublisher
     {
     }
 
-    public function publish(string $pathId, array $context): bool
+    public function publish(string $pathId, array $context): void
     {
-        return $this->featureToggle && 'product_delete' !== $pathId;
+        if ('product_delete' === $pathId && !$this->featureToggle) {
+            throw new EndpointDisabledError('Product delete endpoint is disabled');
+        }
     }
 }

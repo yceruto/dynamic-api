@@ -2,6 +2,7 @@
 
 namespace App\Shared\Presentation\OpenApi\Processor;
 
+use App\Shared\Domain\Error\EndpointDisabledError;
 use App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher;
 use OpenApi\Analysis;
 use OpenApi\Annotations\Operation;
@@ -36,7 +37,9 @@ readonly class PathPublisherProcessor implements ProcessorInterface
                 }
 
                 $context = ['path_item' => $pathItem, 'method' => $method];
-                if (!$this->publisher->publish($method->operationId, $context)) {
+                try {
+                    $this->publisher->publish($method->operationId, $context);
+                } catch (EndpointDisabledError) {
                     $analysis->openapi->paths[$index]->{$method->method} = Generator::UNDEFINED;
                     $analysis->annotations->detach($pathItem);
                 }

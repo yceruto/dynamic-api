@@ -13,14 +13,10 @@ readonly class PathPublisherChain implements PathPublisher
     {
     }
 
-    public function publish(string $pathId, array $context): bool
+    public function publish(string $pathId, array $context): void
     {
         foreach ($this->publishers as $publisher) {
-            if (!$publisher->publish($pathId, $context)) {
-                return false;
-            }
+            $publisher->publish($pathId, $context);
         }
-
-        return true;
     }
 }

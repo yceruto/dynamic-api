@@ -2,10 +2,10 @@
 
 namespace App\Shared\Presentation\Request;
 
+use App\Shared\Domain\Error\EndpointDisabledError;
 use App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -24,11 +24,11 @@ readonly class RequestPathSubscriber implements EventSubscriberInterface
         $request = $event->getRequest();
         $operationId = $request->attributes->getString('_route');
 
-        if ($this->publisher->publish($operationId, ['request' => $request])) {
-            return;
+        try {
+            $this->publisher->publish($operationId, ['request' => $request]);
+        } catch (EndpointDisabledError $e) {
+            $event->setResponse(new JsonResponse(['message' => $e->getMessage()], 400));
         }
-
-        $event->setResponse(new JsonResponse(['message' => 'Endpoint disabled'], 400));
     }
 
     public static function getSubscribedEvents(): array
