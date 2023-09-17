@@ -3,23 +3,24 @@
 namespace App\Product\Domain\View;
 
 use App\Product\Domain\Model\Product;
-use App\Shared\Domain\View\MoneyAware;
+use App\Product\Domain\Provider\ProductGroupsProvider;
 use App\Shared\Domain\View\MoneyView;
-use OpenApi\Attributes as OA;
+use App\Shared\Presentation\OpenApi\Attributes\Property;
+use App\Shared\Presentation\OpenApi\Attributes\Schema;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[OA\Schema]
-readonly class ProductView implements MoneyAware
+#[Schema(groupsProvider: ProductGroupsProvider::class)]
+readonly class ProductView
 {
-    #[OA\Property(format: 'uuid')]
+    #[Property(format: 'uuid', groups: ['Default'])]
     #[Groups('Default')]
     public string $id;
 
-    #[OA\Property]
+    #[Property(groups: ['Default'])]
     #[Groups('Default')]
     public string $name;
 
-    #[OA\Property]
+    #[Property(groups: ['Money'])]
     #[Groups('Money')]
     public MoneyView $price;
 

@@ -2,7 +2,7 @@
 
 namespace App\Shared\Presentation\Response;
 
-use App\Shared\Presentation\Provider\GroupProvider;
+use App\Shared\Presentation\Provider\GroupsResolver;
 use OpenApi\Annotations\Operation;
 use OpenApi\Attributes as OA;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -16,7 +16,7 @@ readonly class ControllerResultSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private SerializerInterface $serializer,
-        private GroupProvider $provider,
+        private GroupsResolver $groupsResolver,
     ) {
     }
 
@@ -37,8 +37,13 @@ readonly class ControllerResultSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $groups = $this->provider->groups($result);
-        $content = $this->serializer->serialize($result, 'json', ['groups' => $groups]);
+        $context = [];
+
+        if (is_object($result) && [] !== $groups = $this->groupsResolver->resolve($result)) {
+            $context['groups'] = $groups;
+        }
+
+        $content = $this->serializer->serialize($result, 'json', $context);
         $statusCode = $this->guessStatusCode($event->controllerArgumentsEvent->getAttributes());
         $event->setResponse(new JsonResponse($content, $statusCode, json: true));
     }

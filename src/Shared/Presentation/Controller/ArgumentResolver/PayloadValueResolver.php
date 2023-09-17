@@ -2,7 +2,7 @@
 
 namespace App\Shared\Presentation\Controller\ArgumentResolver;
 
-use App\Shared\Presentation\Provider\GroupProvider;
+use App\Shared\Presentation\Provider\GroupsResolver;
 use App\Shared\Presentation\Request\Attribute\Payload;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +38,7 @@ readonly class PayloadValueResolver implements ValueResolverInterface
     public function __construct(
         private SerializerInterface&DenormalizerInterface $serializer,
         private ValidatorInterface $validator,
-        private GroupProvider $groupProvider,
+        private GroupsResolver $groupsResolver,
     ) {
     }
 
@@ -60,12 +60,14 @@ readonly class PayloadValueResolver implements ValueResolverInterface
         }
 
         $violations = new ConstraintViolationList();
-        $payload = $this->mapRequestPayload($request, $type, $attribute);
+        $payload = $this->mapRequestPayload($request, $type);
 
-        if (null !== $payload) {
-            $groups = $this->groupProvider->groups($payload);
-            $violations->addAll($this->validator->validate($payload, null, $groups));
+        if (null === $payload) {
+            return [null];
         }
+
+        $groups = $this->groupsResolver->resolve($payload);
+        $violations->addAll($this->validator->validate($payload, null, $groups));
 
         if (\count($violations)) {
             throw new HttpException(422, implode("\n", array_map(static fn ($e) => $e->getMessage(), iterator_to_array($violations))), new ValidationFailedException($payload, $violations));
@@ -74,7 +76,7 @@ readonly class PayloadValueResolver implements ValueResolverInterface
         return [$payload];
     }
 
-    private function mapRequestPayload(Request $request, string $type, Payload $attribute): ?object
+    private function mapRequestPayload(Request $request, string $type): ?object
     {
         if (null === $format = $request->getContentTypeFormat()) {
             throw new HttpException(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, 'Unsupported format.');
@@ -84,14 +86,8 @@ readonly class PayloadValueResolver implements ValueResolverInterface
             return null;
         }
 
-        $context = [];
-        if ($attribute->deserializerGroups) {
-            $context['groups'] = $attribute->deserializerGroups;
-            $context['groups'][] = 'Default';
-        }
-
         try {
-            return $this->serializer->deserialize($data, $type, $format, self::CONTEXT_DESERIALIZE + $context);
+            return $this->serializer->deserialize($data, $type, $format, self::CONTEXT_DESERIALIZE);
         } catch (UnsupportedFormatException $e) {
             throw new HttpException(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, sprintf('Unsupported format: "%s".', $format), $e);
         } catch (NotEncodableValueException $e) {

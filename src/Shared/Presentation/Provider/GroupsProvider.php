@@ -2,7 +2,7 @@
 
 namespace App\Shared\Presentation\Provider;
 
-interface GroupProvider
+interface GroupsProvider
 {
     /**
      * @return string[]

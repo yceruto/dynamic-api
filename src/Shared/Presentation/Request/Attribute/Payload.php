@@ -9,7 +9,6 @@ use Symfony\Component\HttpKernel\Attribute\ValueResolver;
 class Payload extends ValueResolver
 {
     public function __construct(
-        public readonly array $deserializerGroups = [],
         string $resolver = PayloadValueResolver::class,
     ) {
         parent::__construct($resolver);

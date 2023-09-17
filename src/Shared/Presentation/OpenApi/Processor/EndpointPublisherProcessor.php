@@ -22,6 +22,12 @@ readonly class EndpointPublisherProcessor implements ProcessorInterface
         /** @var PathItem[] $paths */
         $pathItems = $analysis->openapi->paths;
 
+        // unset property
+        //unset($analysis->openapi->components->schemas[2]->properties[2]);
+
+        // unset schema
+        //unset($analysis->openapi->components->schemas[2]);
+
         foreach ($pathItems as $index => $pathItem) {
             /** @var Operation[]|ApiRouteTrait[] $methods */
             $methods = [
