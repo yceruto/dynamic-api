@@ -7,7 +7,7 @@ use App\Shared\Presentation\Provider\GroupProvider;
 
 readonly class MoneyFeatureGroupProvider implements GroupProvider
 {
-    public function __construct(private bool $featureToggle = false)
+    public function __construct(private bool $featureToggle = true)
     {
     }
 
