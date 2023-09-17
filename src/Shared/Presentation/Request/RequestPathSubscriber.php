@@ -3,7 +3,7 @@
 namespace App\Shared\Presentation\Request;
 
 use App\Shared\Domain\Error\EndpointDisabledError;
-use App\Shared\Presentation\OpenApi\Processor\Path\PathPublisherContainer;
+use App\Shared\Presentation\OpenApi\Processor\Publisher\EndpointPublisherContainer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 readonly class RequestPathSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private PathPublisherContainer $publishers)
+    public function __construct(private EndpointPublisherContainer $publishers)
     {
     }
 
@@ -27,10 +27,10 @@ readonly class RequestPathSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $pathPublisher = $this->publishers->get($publisherId);
+        $endpointPublisher = $this->publishers->get($publisherId);
 
         try {
-            if (!$pathPublisher->publish([
+            if (!$endpointPublisher->publish([
                 'path_id' => $request->attributes->getString('_route'),
                 'request' => $request,
             ])) {

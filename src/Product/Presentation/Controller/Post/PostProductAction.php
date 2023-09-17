@@ -4,6 +4,7 @@ namespace App\Product\Presentation\Controller\Post;
 
 use App\Product\Application\Create\CreateProductCommand;
 use App\Product\Domain\View\ProductView;
+use App\Product\Presentation\Publisher\ProductEndpointPublisher;
 use App\Shared\Presentation\Controller\CommandAction;
 use App\Shared\Presentation\Request\Attribute\Payload;
 use App\Shared\Presentation\Routing\Attribute\Post;
@@ -17,6 +18,7 @@ class PostProductAction extends CommandAction
         path: '/products',
         summary: 'Create a new product',
         tags: ['Product'],
+        publisher:  ProductEndpointPublisher::class,
     )]
     public function __invoke(#[Payload] PostProductPayload $payload): ProductView
     {

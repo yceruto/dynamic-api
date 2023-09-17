@@ -6,8 +6,8 @@ services:
         autoconfigure: true
 
     _instanceof:
-        App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher:
-            tags: ['api.path_publisher']
+        App\Shared\Presentation\OpenApi\Processor\Publisher\EndpointPublisher:
+            tags: ['api.endpoint_publisher']
 
         App\Shared\Presentation\Provider\GroupProvider:
             tags: ['api.group_provider']

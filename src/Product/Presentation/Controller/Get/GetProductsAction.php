@@ -4,6 +4,7 @@ namespace App\Product\Presentation\Controller\Get;
 
 use App\Product\Application\Find\Search\SearchProductsQuery;
 use App\Product\Domain\View\ProductView;
+use App\Product\Presentation\Publisher\ProductEndpointPublisher;
 use App\Shared\Presentation\Controller\QueryAction;
 use App\Shared\Presentation\Request\Attribute\Query;
 use App\Shared\Presentation\Routing\Attribute\Get;
@@ -27,6 +28,7 @@ class GetProductsAction extends QueryAction
                 ),
             )
         ],
+        publisher:  ProductEndpointPublisher::class,
     )]
     public function __invoke(#[Query] GetProductsFilter $filter): array
     {

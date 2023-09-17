@@ -3,7 +3,7 @@
 namespace App\Shared\Presentation\OpenApi\Processor;
 
 use App\Shared\Domain\Error\EndpointDisabledError;
-use App\Shared\Presentation\OpenApi\Processor\Path\PathPublisherContainer;
+use App\Shared\Presentation\OpenApi\Processor\Publisher\EndpointPublisherContainer;
 use App\Shared\Presentation\Routing\Attribute\ApiRouteTrait;
 use OpenApi\Analysis;
 use OpenApi\Annotations\Operation;
@@ -11,9 +11,9 @@ use OpenApi\Annotations\PathItem;
 use OpenApi\Generator;
 use OpenApi\Processors\ProcessorInterface;
 
-readonly class PathPublisherProcessor implements ProcessorInterface
+readonly class EndpointPublisherProcessor implements ProcessorInterface
 {
-    public function __construct(private PathPublisherContainer $publishers)
+    public function __construct(private EndpointPublisherContainer $publishers)
     {
     }
 
@@ -41,10 +41,10 @@ readonly class PathPublisherProcessor implements ProcessorInterface
                     continue;
                 }
 
-                $pathPublisher = $this->publishers->get($publisherId);
+                $endpointPublisher = $this->publishers->get($publisherId);
 
                 try {
-                    if (!$pathPublisher->publish([
+                    if (!$endpointPublisher->publish([
                         'path_id' => $method->operationId,
                         'path_item' => $pathItem,
                         'method' => $method,
