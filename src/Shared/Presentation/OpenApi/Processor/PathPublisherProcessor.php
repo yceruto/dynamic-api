@@ -3,7 +3,8 @@
 namespace App\Shared\Presentation\OpenApi\Processor;
 
 use App\Shared\Domain\Error\EndpointDisabledError;
-use App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher;
+use App\Shared\Presentation\OpenApi\Processor\Path\PathPublisherContainer;
+use App\Shared\Presentation\Routing\Attribute\ApiRouteTrait;
 use OpenApi\Analysis;
 use OpenApi\Annotations\Operation;
 use OpenApi\Annotations\PathItem;
@@ -12,7 +13,7 @@ use OpenApi\Processors\ProcessorInterface;
 
 readonly class PathPublisherProcessor implements ProcessorInterface
 {
-    public function __construct(private PathPublisher $publisher)
+    public function __construct(private PathPublisherContainer $publishers)
     {
     }
 
@@ -22,7 +23,7 @@ readonly class PathPublisherProcessor implements ProcessorInterface
         $pathItems = $analysis->openapi->paths;
 
         foreach ($pathItems as $index => $pathItem) {
-            /** @var Operation[] $methods */
+            /** @var Operation[]|ApiRouteTrait[] $methods */
             $methods = [
                 $pathItem->post,
                 $pathItem->get,
@@ -36,9 +37,16 @@ readonly class PathPublisherProcessor implements ProcessorInterface
                     continue;
                 }
 
-                $context = ['path_item' => $pathItem, 'method' => $method];
+                if ('' === $publisherId = $method->route->getDefaults()['_publisher'] ?? '') {
+                    continue;
+                }
+
+                $pathPublisher = $this->publishers->get($publisherId);
+
                 try {
-                    $this->publisher->publish($method->operationId, $context);
+                    if (!$pathPublisher->publish(['path_item' => $pathItem, 'method' => $method])) {
+                        throw new EndpointDisabledError();
+                    }
                 } catch (EndpointDisabledError) {
                     $analysis->openapi->paths[$index]->{$method->method} = Generator::UNDEFINED;
                     $analysis->annotations->detach($pathItem);

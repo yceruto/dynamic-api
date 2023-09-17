@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 trait ApiRouteTrait
 {
-    private Route $route;
+    public readonly Route $route;
 
     public function __construct(
         // OpenAPI Path properties
@@ -39,7 +39,8 @@ trait ApiRouteTrait
         string $format = null,
         bool $utf8 = null,
         bool $stateless = null,
-        string $env = null
+        string $env = null,
+        string $publisher = null,
     ) {
         parent::__construct(
             $path,
@@ -64,7 +65,7 @@ trait ApiRouteTrait
             $name,
             $requirements,
             $options,
-            $defaults,
+            $defaults + ['_publisher' => $publisher],
             $host,
             $this->getMethod(),
             $schemes,

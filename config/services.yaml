@@ -18,7 +18,6 @@ services:
             - '../src/Presentation/'
             - '../src/Kernel.php'
 
-    App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher: '@App\Shared\Presentation\OpenApi\Processor\Path\PathPublisherChain'
     App\Shared\Presentation\Provider\GroupProvider: '@App\Shared\Presentation\Provider\GroupProviderChain'
 
     routing.loader.attribute.post:

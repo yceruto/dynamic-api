@@ -7,14 +7,16 @@ use App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher;
 
 readonly class ProductPathPublisher implements PathPublisher
 {
-    public function __construct(private bool $featureToggle = true)
+    public function __construct(private bool $featureToggle = false)
     {
     }
 
-    public function publish(string $pathId, array $context): void
+    public function publish(array $context): bool
     {
-        if ('product_delete' === $pathId && !$this->featureToggle) {
-            throw new EndpointDisabledError('Product delete endpoint is disabled');
+        if (!$this->featureToggle) {
+            return false; //throw new EndpointDisabledError('Product delete endpoint is disabled');
         }
+
+        return true;
     }
 }
