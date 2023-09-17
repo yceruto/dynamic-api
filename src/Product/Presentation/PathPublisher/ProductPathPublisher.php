@@ -4,10 +4,14 @@ namespace App\Product\Presentation\PathPublisher;
 
 use App\Shared\Presentation\OpenApi\Processor\Path\PathPublisher;
 
-class ProductPathPublisher implements PathPublisher
+readonly class ProductPathPublisher implements PathPublisher
 {
+    public function __construct(private bool $featureToggle = true)
+    {
+    }
+
     public function publish(string $pathId, array $context): bool
     {
-        return true; //'product_get' !== $pathId;
+        return $this->featureToggle && 'product_delete' !== $pathId;
     }
 }

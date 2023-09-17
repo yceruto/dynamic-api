@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[OA\Schema]
 class PostProductPayload implements MoneyAware
 {
-    #[OA\Property]
+    #[OA\Property(format: 'uuid')]
     #[Assert\Uuid]
     #[Groups('Default')]
     public ?string $id = null;

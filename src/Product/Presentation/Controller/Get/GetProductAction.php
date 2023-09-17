@@ -14,7 +14,6 @@ class GetProductAction extends QueryAction
         path: '/products/{id}',
         summary: 'Get a product by id',
         tags: ['Product'],
-        name: 'product_get',
     )]
     public function __invoke(#[Path] string $id): ProductView
     {
