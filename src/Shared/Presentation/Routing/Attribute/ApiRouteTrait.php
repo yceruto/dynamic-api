@@ -60,12 +60,16 @@ trait ApiRouteTrait
             $attachables,
         );
 
+        if ($publisher) {
+            $defaults += ['_publisher' => $publisher];
+        }
+
         $this->route = new Route(
             $path,
             $name,
             $requirements,
             $options,
-            $defaults + ['_publisher' => $publisher],
+            $defaults,
             $host,
             $this->getMethod(),
             $schemes,

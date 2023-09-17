@@ -37,7 +37,7 @@ readonly class EndpointPublisherProcessor implements ProcessorInterface
                     continue;
                 }
 
-                if ('' === $publisherId = $method->route->getDefaults()['_publisher'] ?? '') {
+                if (!$publisherId = $method->route->getDefaults()['_publisher'] ?? '') {
                     continue;
                 }
 

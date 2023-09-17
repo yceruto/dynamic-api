@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-readonly class RequestPathSubscriber implements EventSubscriberInterface
+readonly class RequestEndpointSubscriber implements EventSubscriberInterface
 {
     public function __construct(private EndpointPublisherContainer $publishers)
     {
@@ -23,7 +23,7 @@ readonly class RequestPathSubscriber implements EventSubscriberInterface
 
         $request = $event->getRequest();
 
-        if ('' === $publisherId = $request->attributes->getString('_publisher')) {
+        if (!$publisherId = $request->attributes->getString('_publisher')) {
             return;
         }
 
