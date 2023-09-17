@@ -44,7 +44,11 @@ readonly class PathPublisherProcessor implements ProcessorInterface
                 $pathPublisher = $this->publishers->get($publisherId);
 
                 try {
-                    if (!$pathPublisher->publish(['path_item' => $pathItem, 'method' => $method])) {
+                    if (!$pathPublisher->publish([
+                        'path_id' => $method->operationId,
+                        'path_item' => $pathItem,
+                        'method' => $method,
+                    ])) {
                         throw new EndpointDisabledError();
                     }
                 } catch (EndpointDisabledError) {

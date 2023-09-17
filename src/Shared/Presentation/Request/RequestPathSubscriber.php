@@ -30,7 +30,10 @@ readonly class RequestPathSubscriber implements EventSubscriberInterface
         $pathPublisher = $this->publishers->get($publisherId);
 
         try {
-            if (!$pathPublisher->publish(['request' => $request])) {
+            if (!$pathPublisher->publish([
+                'path_id' => $request->attributes->getString('_route'),
+                'request' => $request,
+            ])) {
                 $event->setResponse(new JsonResponse(['message' => 'Endpoint is disabled'], 400));
             }
         } catch (EndpointDisabledError $e) {
