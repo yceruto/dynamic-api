@@ -22,7 +22,7 @@ class PostProductPayload
     public string $name;
 
     #[Property(publisher: MoneyFeaturePublisher::class)]
-    #[Assert\NotBlank(groups: ['Money'])]
+    #[Assert\NotNull(groups: ['Money'])]
     #[Assert\Valid(groups: ['Money'])]
     public MoneyPayload $price;
 }
