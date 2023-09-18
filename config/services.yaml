@@ -6,7 +6,7 @@ services:
         autoconfigure: true
 
     _instanceof:
-        App\Shared\Presentation\OpenApi\Processor\Publisher\EndpointPublisher:
+        App\Shared\Presentation\OpenApi\Processor\Publisher\FeaturePublisher:
             tags: ['api.endpoint_publisher']
 
         App\Shared\Presentation\Provider\GroupsProvider:

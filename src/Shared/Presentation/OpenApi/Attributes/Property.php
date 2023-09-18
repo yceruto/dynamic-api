@@ -70,6 +70,7 @@ class Property extends \OpenApi\Attributes\Property
         ?array $x = null,
         ?array $attachables = null,
         public readonly array $groups = [],
+        public readonly ?string $publisher = null,
     ) {
         parent::__construct(
             $property,

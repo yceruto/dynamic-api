@@ -5,16 +5,16 @@ namespace App\Shared\Presentation\OpenApi\Processor\Publisher;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
 
-readonly class EndpointPublisherContainer implements ContainerInterface
+readonly class FeaturePublisherContainer implements ContainerInterface
 {
     /**
-     * @param ContainerInterface<string, EndpointPublisher> $publishers
+     * @param ContainerInterface<string, FeaturePublisher> $publishers
      */
     public function __construct(#[TaggedLocator('api.endpoint_publisher')] private ContainerInterface $publishers)
     {
     }
 
-    public function get(string $id): EndpointPublisher
+    public function get(string $id): FeaturePublisher
     {
         return $this->publishers->get($id);
     }

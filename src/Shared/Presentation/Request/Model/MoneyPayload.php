@@ -2,22 +2,29 @@
 
 namespace App\Shared\Presentation\Request\Model;
 
-use OpenApi\Attributes as OA;
-use Symfony\Component\Serializer\Annotation\Groups;
+use App\Shared\Presentation\OpenApi\Attributes\Property;
+use App\Shared\Presentation\OpenApi\Attributes\Schema;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[OA\Schema]
+#[Schema]
 class MoneyPayload
 {
-    #[OA\Property(example: 100)]
+    #[Property(example: 100)]
     #[Assert\NotBlank(groups: ['Money'])]
     #[Assert\Positive(groups: ['Money'])]
-    #[Groups('Money')]
     public int $amount;
 
-    #[OA\Property(example: 'EUR')]
+    #[Property(example: 'EUR')]
     #[Assert\NotBlank(groups: ['Money'])]
     #[Assert\Currency(groups: ['Money'])]
-    #[Groups('Money')]
     public string $currency;
+
+    public static function free(): self
+    {
+        $payload = new self();
+        $payload->amount = 0;
+        $payload->currency = 'EUR';
+
+        return $payload;
+    }
 }

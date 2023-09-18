@@ -3,8 +3,8 @@
 namespace App\Product\Presentation\Controller\Get;
 
 use App\Product\Application\Find\One\FindProductQuery;
+use App\Product\Domain\Publisher\ProductFeaturePublisher;
 use App\Product\Domain\View\ProductView;
-use App\Product\Presentation\Publisher\ProductEndpointPublisher;
 use App\Shared\Presentation\Controller\QueryAction;
 use App\Shared\Presentation\Request\Attribute\Path;
 use App\Shared\Presentation\Routing\Attribute\Get;
@@ -15,7 +15,7 @@ class GetProductAction extends QueryAction
         path: '/products/{id}',
         summary: 'Get a product by id',
         tags: ['Product'],
-        publisher:  ProductEndpointPublisher::class,
+        publisher:  ProductFeaturePublisher::class,
     )]
     public function __invoke(#[Path] string $id): ProductView
     {

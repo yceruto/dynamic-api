@@ -3,8 +3,9 @@
 namespace App;
 
 use App\Shared\Presentation\OpenApi\Analyser\AttributeAnnotationFactory;
-use App\Shared\Presentation\OpenApi\Processor\Publisher\EndpointPublisher;
-use App\Shared\Presentation\OpenApi\Processor\EndpointPublisherProcessor;
+use App\Shared\Presentation\OpenApi\Processor\PropertyFeatureProcessor;
+use App\Shared\Presentation\OpenApi\Processor\Publisher\FeaturePublisher;
+use App\Shared\Presentation\OpenApi\Processor\PathsFeatureProcessor;
 use OpenApi\Analysers\DocBlockAnnotationFactory;
 use OpenApi\Analysers\ReflectionAnalyser;
 use OpenApi\Attributes as OA;
@@ -29,8 +30,10 @@ class Kernel extends BaseKernel
     }
 
     #[Route('/swagger.json')]
-    public function swagger(EndpointPublisherProcessor $endpointPublisherProcessor): JsonResponse
-    {
+    public function swagger(
+        PathsFeatureProcessor $pathsFeatureProcessor,
+        PropertyFeatureProcessor $propertyFeatureProcessor,
+    ): JsonResponse {
         $openApi = Generator::scan([__DIR__], [
             'analyser' => new ReflectionAnalyser([
                 new DocBlockAnnotationFactory(),
@@ -53,7 +56,8 @@ class Kernel extends BaseKernel
                 new Processors\MergeXmlContent(),
                 new Processors\OperationId(),
                 new Processors\CleanUnmerged(),
-                $endpointPublisherProcessor,
+                $pathsFeatureProcessor,
+                $propertyFeatureProcessor,
             ],
         ]) ?? throw new NotFoundHttpException();
 

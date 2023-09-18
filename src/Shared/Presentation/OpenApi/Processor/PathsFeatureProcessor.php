@@ -2,8 +2,8 @@
 
 namespace App\Shared\Presentation\OpenApi\Processor;
 
-use App\Shared\Domain\Error\EndpointDisabledError;
-use App\Shared\Presentation\OpenApi\Processor\Publisher\EndpointPublisherContainer;
+use App\Shared\Domain\Error\FeatureDisabledError;
+use App\Shared\Presentation\OpenApi\Processor\Publisher\FeaturePublisherContainer;
 use App\Shared\Presentation\Routing\Attribute\ApiRouteTrait;
 use OpenApi\Analysis;
 use OpenApi\Annotations\Operation;
@@ -11,9 +11,9 @@ use OpenApi\Annotations\PathItem;
 use OpenApi\Generator;
 use OpenApi\Processors\ProcessorInterface;
 
-readonly class EndpointPublisherProcessor implements ProcessorInterface
+readonly class PathsFeatureProcessor implements ProcessorInterface
 {
-    public function __construct(private EndpointPublisherContainer $publishers)
+    public function __construct(private FeaturePublisherContainer $publishers)
     {
     }
 
@@ -21,12 +21,6 @@ readonly class EndpointPublisherProcessor implements ProcessorInterface
     {
         /** @var PathItem[] $paths */
         $pathItems = $analysis->openapi->paths;
-
-        // unset property
-        //unset($analysis->openapi->components->schemas[2]->properties[2]);
-
-        // unset schema
-        //unset($analysis->openapi->components->schemas[2]);
 
         foreach ($pathItems as $index => $pathItem) {
             /** @var Operation[]|ApiRouteTrait[] $methods */
@@ -55,9 +49,9 @@ readonly class EndpointPublisherProcessor implements ProcessorInterface
                         'path_item' => $pathItem,
                         'method' => $method,
                     ])) {
-                        throw new EndpointDisabledError();
+                        throw new FeatureDisabledError();
                     }
-                } catch (EndpointDisabledError) {
+                } catch (FeatureDisabledError) {
                     $analysis->openapi->paths[$index]->{$method->method} = Generator::UNDEFINED;
                     $analysis->annotations->detach($pathItem);
                 }

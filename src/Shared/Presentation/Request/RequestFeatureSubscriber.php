@@ -2,16 +2,16 @@
 
 namespace App\Shared\Presentation\Request;
 
-use App\Shared\Domain\Error\EndpointDisabledError;
-use App\Shared\Presentation\OpenApi\Processor\Publisher\EndpointPublisherContainer;
+use App\Shared\Domain\Error\FeatureDisabledError;
+use App\Shared\Presentation\OpenApi\Processor\Publisher\FeaturePublisherContainer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-readonly class RequestEndpointSubscriber implements EventSubscriberInterface
+readonly class RequestFeatureSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private EndpointPublisherContainer $publishers)
+    public function __construct(private FeaturePublisherContainer $publishers)
     {
     }
 
@@ -36,7 +36,7 @@ readonly class RequestEndpointSubscriber implements EventSubscriberInterface
             ])) {
                 $event->setResponse(new JsonResponse(['message' => 'Endpoint is disabled'], 400));
             }
-        } catch (EndpointDisabledError $e) {
+        } catch (FeatureDisabledError $e) {
             $event->setResponse(new JsonResponse(['message' => $e->getMessage()], 400));
         }
     }

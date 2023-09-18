@@ -2,18 +2,19 @@
 
 namespace App\Shared\Domain\View;
 
+use App\Shared\Presentation\OpenApi\Attributes\Property;
+use App\Shared\Presentation\OpenApi\Attributes\Schema;
 use Money\Money;
-use OpenApi\Attributes as OA;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[OA\Schema]
+#[Schema]
 readonly class MoneyView
 {
-    #[OA\Property(example: 100)]
+    #[Property(example: 100)]
     #[Groups('Money')]
     public int $amount;
 
-    #[OA\Property(example: 'EUR')]
+    #[Property(example: 'EUR')]
     #[Groups('Money')]
     public string $currency;
 

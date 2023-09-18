@@ -2,18 +2,20 @@
 
 namespace App\Product\Presentation\Controller\Put;
 
+use App\Shared\Domain\Publisher\MoneyFeaturePublisher;
+use App\Shared\Presentation\OpenApi\Attributes\Property;
+use App\Shared\Presentation\OpenApi\Attributes\Schema;
 use App\Shared\Presentation\Request\Model\MoneyPayload;
-use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[OA\Schema]
+#[Schema]
 class PutProductPayload
 {
-    #[OA\Property]
+    #[Property]
     #[Assert\Length(min: 3)]
     public string $name;
 
-    #[OA\Property]
+    #[Property(publisher: MoneyFeaturePublisher::class)]
     #[Assert\Valid]
     public MoneyPayload $price;
 }

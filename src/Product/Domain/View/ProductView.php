@@ -4,6 +4,7 @@ namespace App\Product\Domain\View;
 
 use App\Product\Domain\Model\Product;
 use App\Product\Domain\Provider\ProductGroupsProvider;
+use App\Shared\Domain\Publisher\MoneyFeaturePublisher;
 use App\Shared\Domain\View\MoneyView;
 use App\Shared\Presentation\OpenApi\Attributes\Property;
 use App\Shared\Presentation\OpenApi\Attributes\Schema;
@@ -12,15 +13,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[Schema(groupsProvider: ProductGroupsProvider::class)]
 readonly class ProductView
 {
-    #[Property(format: 'uuid', groups: ['Default'])]
+    #[Property(format: 'uuid')]
     #[Groups('Default')]
     public string $id;
 
-    #[Property(groups: ['Default'])]
+    #[Property]
     #[Groups('Default')]
     public string $name;
 
-    #[Property(groups: ['Money'])]
+    #[Property(publisher: MoneyFeaturePublisher::class)]
     #[Groups('Money')]
     public MoneyView $price;
 
