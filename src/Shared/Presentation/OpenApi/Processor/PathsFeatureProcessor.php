@@ -41,13 +41,13 @@ readonly class PathsFeatureProcessor implements ProcessorInterface
                     continue;
                 }
 
-                $endpointPublisher = $this->publishers->get($publisherId);
+                $featurePublisher = $this->publishers->get($publisherId);
 
                 try {
-                    if (!$endpointPublisher->publish([
+                    if (!$featurePublisher->publish([
                         'path_id' => $method->operationId,
                         'path_item' => $pathItem,
-                        'method' => $method,
+                        'subject' => $method,
                     ])) {
                         throw new FeatureDisabledError();
                     }

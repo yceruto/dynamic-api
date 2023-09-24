@@ -29,7 +29,7 @@ readonly class PropertyFeatureProcessor implements ProcessorInterface
                 }
 
                 try {
-                    if (!$this->publishers->get($publisherId)->publish([])) {
+                    if (!$this->publishers->get($publisherId)->publish(['subject' => $annotation])) {
                         throw new FeatureDisabledError();
                     }
                 } catch (FeatureDisabledError) {

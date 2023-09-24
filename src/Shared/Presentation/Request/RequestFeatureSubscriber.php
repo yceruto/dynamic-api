@@ -32,7 +32,7 @@ readonly class RequestFeatureSubscriber implements EventSubscriberInterface
         try {
             if (!$endpointPublisher->publish([
                 'path_id' => $request->attributes->getString('_route'),
-                'request' => $request,
+                'subject' => $request,
             ])) {
                 $event->setResponse(new JsonResponse(['message' => 'Endpoint is disabled'], 400));
             }
