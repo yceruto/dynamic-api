@@ -7,6 +7,7 @@ use OpenApi\Generator;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Mapping\Loader\LoaderInterface;
+use UnitEnum;
 
 class OpenApiValidatorAttributeLoader implements LoaderInterface
 {
@@ -68,9 +69,29 @@ class OpenApiValidatorAttributeLoader implements LoaderInterface
                     $loaded = true;
                 }
 
-                if (is_array($attribute->enum)) {
-                    $metadata->addPropertyConstraint($property->name, new Assert\Choice(choices: $attribute->enum, groups: $groups));
-                    $loaded = true;
+                if (!Generator::isDefault($attribute->enum)) {
+                    $enum = $attribute->enum;
+                    $choices = [];
+
+                    if (is_string($enum) && is_subclass_of($enum, UnitEnum::class)) {
+                        $enum = $enum::cases();
+                    }
+
+                    if (is_array($enum)) {
+                        foreach ($enum as $case) {
+                            if ($case instanceof \BackedEnum) {
+                                $case = $case->value;
+                            } elseif ($case instanceof \UnitEnum) {
+                                $case = $case->name;
+                            }
+                            $choices[] = $case;
+                        }
+                    }
+
+                    if ($choices) {
+                        $metadata->addPropertyConstraint($property->name, new Assert\Choice(choices: $choices, groups: $groups));
+                        $loaded = true;
+                    }
                 }
 
                 if (!Generator::isDefault($attribute->multipleOf)) {

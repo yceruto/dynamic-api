@@ -11,12 +11,12 @@ use App\Shared\Presentation\Request\Model\MoneyPayload;
 #[Schema]
 class PutProductPayload
 {
-    #[Property(minLength: 3)]
+    #[Property(minLength: 3, groups: ['Default'])]
     public string $name;
 
-    #[Property(publisher: MoneyFeaturePublisher::class)]
+    #[Property(groups: ['Money'], publisher: MoneyFeaturePublisher::class)]
     public MoneyPayload $price;
 
-    #[Property(enum: [ProductStatus::DRAFT->value, ProductStatus::PUBLISHED->value, ProductStatus::ARCHIVED->value], groups: ['Default'])]
+    #[Property(enum: ProductStatus::class, groups: ['Default'])]
     public string $status;
 }

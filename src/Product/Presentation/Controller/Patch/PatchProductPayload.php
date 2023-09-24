@@ -12,14 +12,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Schema]
 class PatchProductPayload
 {
-    #[Property]
-    #[Assert\Length(min: 3)]
+    #[Property(minLength: 3, groups: ['Default'])]
     public ?string $name = null;
 
-    #[Property(publisher: MoneyFeaturePublisher::class)]
-    #[Assert\Valid]
+    #[Property(groups: ['Money'], publisher: MoneyFeaturePublisher::class)]
     public ?MoneyPayload $price = null;
 
-    #[Property(enum: [ProductStatus::DRAFT->value, ProductStatus::PUBLISHED->value, ProductStatus::ARCHIVED->value], groups: ['Default'])]
+    #[Property(enum: ProductStatus::class, groups: ['Default'])]
     public ?string $status = null;
 }

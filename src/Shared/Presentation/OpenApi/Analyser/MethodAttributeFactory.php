@@ -9,12 +9,10 @@ use OpenApi\Attributes as OA;
 use OpenApi\Context;
 use OpenApi\Generator;
 
-class AttributeAnnotationFactory extends \OpenApi\Analysers\AttributeAnnotationFactory
+class MethodAttributeFactory implements AttributeFactory
 {
-    public function build(\Reflector $reflector, Context $context): array
+    public function build(\Reflector $reflector, array $annotations, Context $context): array
     {
-        $annotations = parent::build($reflector, $context);
-
         if (!$reflector instanceof \ReflectionMethod) {
             return $annotations;
         }

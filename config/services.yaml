@@ -12,10 +12,12 @@ services:
         App\Shared\Presentation\Provider\GroupsProvider:
             tags: ['api.groups_provider']
 
+        App\Shared\Presentation\OpenApi\Analyser\AttributeFactory:
+            tags: ['api.attribute_factory']
+
     App\:
         resource: '../src/'
         exclude:
-            - '../src/Presentation/'
             - '../src/Kernel.php'
 
     routing.loader.attribute.post:

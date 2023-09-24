@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Shared\Presentation\OpenApi\Analyser\AttributeAnnotationFactory;
+use App\Shared\Presentation\OpenApi\Analyser\AttributeFactoryChain;
 use App\Shared\Presentation\OpenApi\Processor\PathsFeatureProcessor;
 use App\Shared\Presentation\OpenApi\Processor\PropertyFeatureProcessor;
 use App\Shared\Presentation\OpenApi\Serializer\Mapping\Loader\OpenApiSerializerAttributeLoader;
@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -35,13 +36,15 @@ class Kernel extends BaseKernel implements CompilerPassInterface
 
     #[Route('/swagger.json')]
     public function swagger(
+        Request $request,
         PathsFeatureProcessor $pathsFeatureProcessor,
         PropertyFeatureProcessor $propertyFeatureProcessor,
+        AttributeFactoryChain $attributeFactoryChain,
     ): JsonResponse {
         $openApi = Generator::scan([__DIR__], [
             'analyser' => new ReflectionAnalyser([
                 new DocBlockAnnotationFactory(),
-                new AttributeAnnotationFactory(),
+                $attributeFactoryChain,
             ]),
             'processors' => [
                 new Processors\DocBlockDescriptions(),
@@ -66,7 +69,7 @@ class Kernel extends BaseKernel implements CompilerPassInterface
         ]) ?? throw new NotFoundHttpException();
 
         $openApi->servers = [
-            new OA\Server(url: 'https://127.0.0.1:8000'),
+            new OA\Server(url: $request->getSchemeAndHttpHost()),
         ];
 
         return new JsonResponse($openApi->toJson(), json: true);
