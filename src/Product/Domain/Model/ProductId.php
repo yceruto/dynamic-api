@@ -21,8 +21,10 @@ readonly class ProductId
 
     private function __construct(string $value)
     {
-        if (!Uuid::isValid($value)) {
-            throw new DomainException(sprintf('Invalid UUID value %s', $value));
+        try {
+            Uuid::fromString($value);
+        } catch (\InvalidArgumentException $e) {
+            throw new DomainException($e->getMessage(), $e->getCode(), $e);
         }
 
         $this->value = $value;
