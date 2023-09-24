@@ -3,10 +3,10 @@
 namespace App;
 
 use App\Shared\Presentation\OpenApi\Analyser\AttributeAnnotationFactory;
-use App\Shared\Presentation\OpenApi\Processor\PropertyFeatureProcessor;
-use App\Shared\Presentation\OpenApi\Processor\Publisher\FeaturePublisher;
 use App\Shared\Presentation\OpenApi\Processor\PathsFeatureProcessor;
-use App\Shared\Presentation\Validator\Mapping\Loader\OpenApiAttributeLoader;
+use App\Shared\Presentation\OpenApi\Processor\PropertyFeatureProcessor;
+use App\Shared\Presentation\OpenApi\Serializer\Mapping\Loader\OpenApiSerializerAttributeLoader;
+use App\Shared\Presentation\OpenApi\Validator\Mapping\Loader\OpenApiValidatorAttributeLoader;
 use OpenApi\Analysers\DocBlockAnnotationFactory;
 use OpenApi\Analysers\ReflectionAnalyser;
 use OpenApi\Attributes as OA;
@@ -74,7 +74,13 @@ class Kernel extends BaseKernel implements CompilerPassInterface
 
     public function process(ContainerBuilder $container): void
     {
+        $chainLoader = $container->getDefinition('serializer.mapping.chain_loader');
+        $serializerLoaders = $chainLoader->getArgument(0);
+        $serializerLoaders[] = new Reference(OpenApiSerializerAttributeLoader::class);
+        $chainLoader->replaceArgument(0, $serializerLoaders);
+        $container->getDefinition('serializer.mapping.cache_warmer')->replaceArgument(0, $serializerLoaders);
+
         $validatorBuilder = $container->getDefinition('validator.builder');
-        $validatorBuilder->addMethodCall('addLoader', [new Reference(OpenApiAttributeLoader::class)]);
+        $validatorBuilder->addMethodCall('addLoader', [new Reference(OpenApiValidatorAttributeLoader::class)]);
     }
 }

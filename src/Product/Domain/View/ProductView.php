@@ -9,25 +9,20 @@ use App\Shared\Domain\Publisher\MoneyFeaturePublisher;
 use App\Shared\Domain\View\MoneyView;
 use App\Shared\Presentation\OpenApi\Attributes\Property;
 use App\Shared\Presentation\OpenApi\Attributes\Schema;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 #[Schema(groupsProvider: ProductGroupsProvider::class)]
 readonly class ProductView
 {
     #[Property(format: 'uuid', groups: ['Default'])]
-    #[Groups('Default')]
     public string $id;
 
     #[Property(groups: ['Default'])]
-    #[Groups('Default')]
     public string $name;
 
     #[Property(groups: ['Money'], publisher: MoneyFeaturePublisher::class)]
-    #[Groups('Money')]
     public MoneyView $price;
 
     #[Property(enum: [ProductStatus::DRAFT, ProductStatus::PUBLISHED, ProductStatus::ARCHIVED], groups: ['Default'])]
-    #[Groups('Default')]
     public string $status;
 
     /**
