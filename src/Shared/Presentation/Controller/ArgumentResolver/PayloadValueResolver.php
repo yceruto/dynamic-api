@@ -10,12 +10,15 @@ use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
+use Symfony\Component\Serializer\Exception\PartialDenormalizationException;
 use Symfony\Component\Serializer\Exception\UnsupportedFormatException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 readonly class PayloadValueResolver implements ValueResolverInterface
 {
@@ -37,6 +40,7 @@ readonly class PayloadValueResolver implements ValueResolverInterface
 
     public function __construct(
         private SerializerInterface&DenormalizerInterface $serializer,
+        private TranslatorInterface $translator,
         private ValidatorInterface $validator,
         private GroupsResolver $groupsResolver,
     ) {
@@ -60,7 +64,20 @@ readonly class PayloadValueResolver implements ValueResolverInterface
         }
 
         $violations = new ConstraintViolationList();
-        $payload = $this->mapRequestPayload($request, $type);
+        try {
+            $payload = $this->mapRequestPayload($request, $type);
+        } catch (PartialDenormalizationException $e) {
+            foreach ($e->getErrors() as $error) {
+                $parameters = ['{{ type }}' => implode('|', $error->getExpectedTypes())];
+                if ($error->canUseMessageForUser()) {
+                    $parameters['hint'] = $error->getMessage();
+                }
+                $template = 'This value should be of type {{ type }}.';
+                $message = $this->translator->trans($template, $parameters, 'validators');
+                $violations->add(new ConstraintViolation($message, $template, $parameters, null, $error->getPath(), null));
+            }
+            $payload = $e->getData();
+        }
 
         if (null === $payload) {
             return [null];

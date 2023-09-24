@@ -3,6 +3,7 @@
 namespace App\Shared\Presentation\Validator\Mapping\Loader;
 
 use App\Shared\Presentation\OpenApi\Attributes\Property;
+use BackedEnum;
 use OpenApi\Generator;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -68,8 +69,8 @@ class OpenApiAttributeLoader implements LoaderInterface
                     $success = true;
                 }
 
-                if (!Generator::isDefault($attribute->enum)) {
-                    $metadata->addPropertyConstraint($property->name, new Assert\Type(type: $attribute->enum, groups: $groups));
+                if (is_array($attribute->enum)) {
+                    $metadata->addPropertyConstraint($property->name, new Assert\Choice(choices: $attribute->enum, groups: $groups));
                     $success = true;
                 }
 
