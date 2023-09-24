@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[OA\Info(version: '1.0', title: 'Catalog API')]
+#[OA\Info(version: '1.0', title: 'Dynamic API')]
 class Kernel extends BaseKernel implements CompilerPassInterface
 {
     use MicroKernelTrait;
