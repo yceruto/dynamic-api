@@ -22,13 +22,13 @@ readonly class ProductView
     #[Groups('Default')]
     public string $name;
 
-    #[Property(groups: ['Default'], publisher: MoneyFeaturePublisher::class)]
+    #[Property(groups: ['Money'], publisher: MoneyFeaturePublisher::class)]
     #[Groups('Money')]
     public MoneyView $price;
 
-    #[Property(groups: ['Default'])]
+    #[Property(enum: [ProductStatus::DRAFT, ProductStatus::PUBLISHED, ProductStatus::ARCHIVED], groups: ['Default'])]
     #[Groups('Default')]
-    public ProductStatus $status;
+    public string $status;
 
     /**
      * @param Product[] $products
@@ -52,6 +52,6 @@ readonly class ProductView
         $this->id = $product->id()->value();
         $this->name = $product->name();
         $this->price = MoneyView::create($product->price());
-        $this->status = $product->status();
+        $this->status = $product->status()->value;
     }
 }
