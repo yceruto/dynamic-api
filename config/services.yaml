@@ -19,46 +19,46 @@ services:
             - '../src/Kernel.php'
 
     routing.loader.attribute.post:
-        class: App\Shared\Presentation\Routing\OpenAPIRouteControllerLoader
+        class: App\Shared\Presentation\OpenApi\Routing\Loader\OpenApiRouteControllerLoader
         arguments:
             - '%kernel.environment%'
         calls:
-            - [setRouteAnnotationClass, ['App\Shared\Presentation\Routing\Attribute\Post']]
+            - [setRouteAnnotationClass, ['App\Shared\Presentation\OpenApi\Routing\Attribute\Post']]
         tags:
             - { name: 'routing.loader', priority: -10 }
 
     routing.loader.attribute.get:
-        class: App\Shared\Presentation\Routing\OpenAPIRouteControllerLoader
+        class: App\Shared\Presentation\OpenApi\Routing\Loader\OpenApiRouteControllerLoader
         arguments:
             - '%kernel.environment%'
         calls:
-            - [setRouteAnnotationClass, ['App\Shared\Presentation\Routing\Attribute\Get']]
+            - [setRouteAnnotationClass, ['App\Shared\Presentation\OpenApi\Routing\Attribute\Get']]
         tags:
             - { name: 'routing.loader', priority: -10 }
 
     routing.loader.attribute.put:
-        class: App\Shared\Presentation\Routing\OpenAPIRouteControllerLoader
+        class: App\Shared\Presentation\OpenApi\Routing\Loader\OpenApiRouteControllerLoader
         arguments:
             - '%kernel.environment%'
         calls:
-            - [setRouteAnnotationClass, ['App\Shared\Presentation\Routing\Attribute\Put']]
+            - [setRouteAnnotationClass, ['App\Shared\Presentation\OpenApi\Routing\Attribute\Put']]
         tags:
             - { name: 'routing.loader', priority: -10 }
 
     routing.loader.attribute.patch:
-        class: App\Shared\Presentation\Routing\OpenAPIRouteControllerLoader
+        class: App\Shared\Presentation\OpenApi\Routing\Loader\OpenApiRouteControllerLoader
         arguments:
             - '%kernel.environment%'
         calls:
-            - [setRouteAnnotationClass, ['App\Shared\Presentation\Routing\Attribute\Patch']]
+            - [setRouteAnnotationClass, ['App\Shared\Presentation\OpenApi\Routing\Attribute\Patch']]
         tags:
             - { name: 'routing.loader', priority: -10 }
 
     routing.loader.attribute.delete:
-        class: App\Shared\Presentation\Routing\OpenAPIRouteControllerLoader
+        class: App\Shared\Presentation\OpenApi\Routing\Loader\OpenApiRouteControllerLoader
         arguments:
             - '%kernel.environment%'
         calls:
-            - [setRouteAnnotationClass, ['App\Shared\Presentation\Routing\Attribute\Delete']]
+            - [setRouteAnnotationClass, ['App\Shared\Presentation\OpenApi\Routing\Attribute\Delete']]
         tags:
             - { name: 'routing.loader', priority: -10 }

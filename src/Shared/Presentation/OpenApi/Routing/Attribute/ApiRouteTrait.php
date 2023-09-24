@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Presentation\Routing\Attribute;
+namespace App\Shared\Presentation\OpenApi\Routing\Attribute;
 
 use OpenApi\Attributes\ExternalDocumentation;
 use OpenApi\Attributes\RequestBody;

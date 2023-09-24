@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Shared\Presentation\Routing\Attribute;
+namespace App\Shared\Presentation\OpenApi\Routing\Attribute;
 
 #[\Attribute(\Attribute::IS_REPEATABLE | \Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
-class Post extends \OpenApi\Attributes\Post
+class Patch extends \OpenApi\Attributes\Patch
 {
     use ApiRouteTrait;
 
     public function getMethod(): string
     {
-        return 'POST';
+        return 'PATCH';
     }
 }

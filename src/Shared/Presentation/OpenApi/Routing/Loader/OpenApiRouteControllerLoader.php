@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Shared\Presentation\Routing;
+namespace App\Shared\Presentation\OpenApi\Routing\Loader;
 
 use ReflectionClass;
 use ReflectionMethod;
 use Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader;
 
-class OpenAPIRouteControllerLoader extends AnnotatedRouteControllerLoader
+class OpenApiRouteControllerLoader extends AnnotatedRouteControllerLoader
 {
     public function supports(mixed $resource, string $type = null): bool
     {

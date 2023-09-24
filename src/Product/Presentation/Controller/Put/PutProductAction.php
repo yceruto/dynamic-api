@@ -6,9 +6,9 @@ use App\Product\Application\Update\UpdateProductCommand;
 use App\Product\Domain\Publisher\ProductFeaturePublisher;
 use App\Product\Domain\View\ProductView;
 use App\Shared\Presentation\Controller\CommandAction;
+use App\Shared\Presentation\OpenApi\Routing\Attribute\Put;
 use App\Shared\Presentation\Request\Attribute\Path;
 use App\Shared\Presentation\Request\Attribute\Payload;
-use App\Shared\Presentation\Routing\Attribute\Put;
 use Money\Currency;
 use Money\Money;
 
