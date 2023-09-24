@@ -34,6 +34,7 @@ class PatchProductAction extends ApiAction
                 $price->amount,
                 new Currency($price->currency),
             ),
+            $payload->status ?? $product->status->value,
         ));
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Product\Application\Update;
 
 use App\Product\Domain\Model\ProductId;
+use App\Product\Domain\Model\ProductStatus;
 use App\Product\Domain\View\ProductView;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
@@ -20,6 +21,7 @@ readonly class UpdateProductHandler implements CommandHandler
             ProductId::fromString($command->id),
             $command->name,
             $command->price,
+            ProductStatus::from($command->status),
         );
 
         return ProductView::create($product);

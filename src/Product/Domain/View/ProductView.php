@@ -3,6 +3,7 @@
 namespace App\Product\Domain\View;
 
 use App\Product\Domain\Model\Product;
+use App\Product\Domain\Model\ProductStatus;
 use App\Product\Domain\Provider\ProductGroupsProvider;
 use App\Shared\Domain\Publisher\MoneyFeaturePublisher;
 use App\Shared\Domain\View\MoneyView;
@@ -13,17 +14,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[Schema(groupsProvider: ProductGroupsProvider::class)]
 readonly class ProductView
 {
-    #[Property(format: 'uuid')]
+    #[Property(format: 'uuid', groups: ['Default'])]
     #[Groups('Default')]
     public string $id;
 
-    #[Property]
+    #[Property(groups: ['Default'])]
     #[Groups('Default')]
     public string $name;
 
-    #[Property(publisher: MoneyFeaturePublisher::class)]
+    #[Property(groups: ['Default'], publisher: MoneyFeaturePublisher::class)]
     #[Groups('Money')]
     public MoneyView $price;
+
+    #[Property(groups: ['Default'])]
+    #[Groups('Default')]
+    public ProductStatus $status;
 
     /**
      * @param Product[] $products
@@ -47,5 +52,6 @@ readonly class ProductView
         $this->id = $product->id()->value();
         $this->name = $product->name();
         $this->price = MoneyView::create($product->price());
+        $this->status = $product->status();
     }
 }

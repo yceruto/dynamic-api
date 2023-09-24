@@ -4,6 +4,7 @@ namespace App\Product\Infrastructure\Persistence\InMemory;
 
 use App\Product\Domain\Model\Product;
 use App\Product\Domain\Model\ProductId;
+use App\Product\Domain\Model\ProductStatus;
 use App\Product\Domain\Repository\ProductRepository;
 use Money\Money;
 
@@ -21,6 +22,7 @@ class InMemoryProductRepository implements ProductRepository
                 ProductId::fromString('3fa85f64-5717-4562-b3fc-2c963f66afa6'),
                 'iPhone X',
                 Money::EUR(99900),
+                ProductStatus::PUBLISHED,
             ),
         ];
     }

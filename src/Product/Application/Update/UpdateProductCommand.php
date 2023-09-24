@@ -11,6 +11,7 @@ readonly class UpdateProductCommand implements Command
         public string $id,
         public string $name,
         public Money $price,
+        public string $status,
     ) {
     }
 }

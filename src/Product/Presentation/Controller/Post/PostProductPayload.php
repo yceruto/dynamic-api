@@ -18,9 +18,9 @@ class PostProductPayload
     #[Property(minLength: 3, groups: ['Default'])]
     public string $name;
 
-    #[Property(enum: ProductStatus::class, groups: ['Default'])]
-    public ProductStatus $status;
-
     #[Property(groups: ['Money'], publisher: MoneyFeaturePublisher::class)]
     public MoneyPayload $price;
+
+    #[Property(enum: [ProductStatus::DRAFT->value, ProductStatus::PUBLISHED->value], groups: ['Default'])]
+    public string $status;
 }

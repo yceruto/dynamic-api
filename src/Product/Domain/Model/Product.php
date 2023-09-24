@@ -6,15 +6,16 @@ use Money\Money;
 
 class Product
 {
-    public static function create(ProductId $id, string $name, Money $price): self
+    public static function create(ProductId $id, string $name, Money $price, ProductStatus $status): self
     {
-        return new self($id, $name, $price);
+        return new self($id, $name, $price, $status);
     }
 
-    public function update(string $name, Money $price): void
+    public function update(string $name, Money $price, ProductStatus $status): void
     {
         $this->name = $name;
         $this->price = $price;
+        $this->status = $status;
     }
 
     public function id(): ProductId
@@ -32,10 +33,16 @@ class Product
         return $this->price;
     }
 
+    public function status(): ProductStatus
+    {
+        return $this->status;
+    }
+
     private function __construct(
         private readonly ProductId $id,
         private string $name,
         private Money $price,
+        private ProductStatus $status,
     ) {
     }
 }

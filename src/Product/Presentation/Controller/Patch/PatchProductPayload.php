@@ -2,6 +2,7 @@
 
 namespace App\Product\Presentation\Controller\Patch;
 
+use App\Product\Domain\Model\ProductStatus;
 use App\Shared\Domain\Publisher\MoneyFeaturePublisher;
 use App\Shared\Presentation\OpenApi\Attributes\Property;
 use App\Shared\Presentation\OpenApi\Attributes\Schema;
@@ -18,4 +19,7 @@ class PatchProductPayload
     #[Property(publisher: MoneyFeaturePublisher::class)]
     #[Assert\Valid]
     public ?MoneyPayload $price = null;
+
+    #[Property(enum: [ProductStatus::DRAFT->value, ProductStatus::PUBLISHED->value, ProductStatus::ARCHIVED->value], groups: ['Default'])]
+    public ?string $status = null;
 }

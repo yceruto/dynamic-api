@@ -29,6 +29,7 @@ class PutProductAction extends CommandAction
                 $payload->price->amount,
                 new Currency($payload->price->currency,
             )),
+            $payload->status,
         ));
     }
 }

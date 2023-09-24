@@ -33,6 +33,7 @@ class PostProductAction extends CommandAction
                 $price->amount,
                 new Currency($price->currency,
             )),
+            $payload->status,
         ));
     }
 }
