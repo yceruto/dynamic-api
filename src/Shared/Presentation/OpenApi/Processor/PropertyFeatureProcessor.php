@@ -6,6 +6,7 @@ use App\Shared\Domain\Error\FeatureDisabledError;
 use App\Shared\Presentation\OpenApi\Attributes\Property;
 use App\Shared\Presentation\OpenApi\Processor\Publisher\FeaturePublisherContainer;
 use OpenApi\Analysis;
+use OpenApi\Generator;
 use OpenApi\Processors\ProcessorInterface;
 
 readonly class PropertyFeatureProcessor implements ProcessorInterface
@@ -18,22 +19,27 @@ readonly class PropertyFeatureProcessor implements ProcessorInterface
     {
         foreach ($analysis->openapi->components->schemas as $schema) {
             foreach ($schema->properties as $i => $property) {
-                $annotation = $property->_context->annotations[0];
-
-                if (!$annotation instanceof Property) {
+                if (!$property instanceof Property) {
                     continue;
                 }
 
-                if (null === $publisherId = $annotation->publisher) {
+                if (null === $publisherId = $property->publisher) {
                     continue;
                 }
 
                 try {
-                    if (!$this->publishers->get($publisherId)->publish(['subject' => $annotation])) {
+                    if (!$this->publishers->get($publisherId)->publish(['subject' => $property])) {
                         throw new FeatureDisabledError();
                     }
                 } catch (FeatureDisabledError) {
                     unset($schema->properties[$i]);
+                    $analysis->annotations->detach($property);
+
+                    if (!Generator::isDefault($property->oneOf)) {
+                        foreach ($property->oneOf as $oneOf) {
+                            $analysis->annotations->detach($oneOf);
+                        }
+                    }
                 }
             }
         }

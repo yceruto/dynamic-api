@@ -5,7 +5,6 @@ namespace App\Shared\Domain\View;
 use App\Shared\Presentation\OpenApi\Attributes\Property;
 use App\Shared\Presentation\OpenApi\Attributes\Schema;
 use Money\Money;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 #[Schema]
 readonly class MoneyView

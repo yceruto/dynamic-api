@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Shared\Presentation\OpenApi\Analyser\AttributeFactoryChain;
+use App\Shared\Presentation\OpenApi\Processor\CleanUselessSchemaProcessor;
 use App\Shared\Presentation\OpenApi\Processor\PathsFeatureProcessor;
 use App\Shared\Presentation\OpenApi\Processor\PropertyFeatureProcessor;
 use App\Shared\Presentation\OpenApi\Serializer\Mapping\Loader\OpenApiSerializerAttributeLoader;
@@ -37,9 +38,10 @@ class Kernel extends BaseKernel implements CompilerPassInterface
     #[Route('/swagger.json')]
     public function swagger(
         Request $request,
+        AttributeFactoryChain $attributeFactoryChain,
         PathsFeatureProcessor $pathsFeatureProcessor,
         PropertyFeatureProcessor $propertyFeatureProcessor,
-        AttributeFactoryChain $attributeFactoryChain,
+        CleanUselessSchemaProcessor $cleanUselessSchemaProcessor,
     ): JsonResponse {
         $openApi = Generator::scan([__DIR__], [
             'analyser' => new ReflectionAnalyser([
@@ -65,6 +67,7 @@ class Kernel extends BaseKernel implements CompilerPassInterface
                 new Processors\CleanUnmerged(),
                 $pathsFeatureProcessor,
                 $propertyFeatureProcessor,
+                $cleanUselessSchemaProcessor,
             ],
         ]) ?? throw new NotFoundHttpException();
 

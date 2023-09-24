@@ -72,6 +72,8 @@ class Schema extends \OpenApi\Attributes\Schema
         ?array $attachables = null,
         public readonly ?string $groupsProvider = null,
     ) {
+        self::$_blacklist = array_merge(self::$_blacklist, ['groupsProvider']);
+
         parent::__construct(
             $ref,
             $schema,

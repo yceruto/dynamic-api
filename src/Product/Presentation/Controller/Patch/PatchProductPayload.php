@@ -3,13 +3,13 @@
 namespace App\Product\Presentation\Controller\Patch;
 
 use App\Product\Domain\Model\ProductStatus;
+use App\Product\Domain\Provider\ProductGroupsProvider;
 use App\Shared\Domain\Publisher\MoneyFeaturePublisher;
 use App\Shared\Presentation\OpenApi\Attributes\Property;
 use App\Shared\Presentation\OpenApi\Attributes\Schema;
 use App\Shared\Presentation\Request\Model\MoneyPayload;
-use Symfony\Component\Validator\Constraints as Assert;
 
-#[Schema]
+#[Schema(groupsProvider: ProductGroupsProvider::class)]
 class PatchProductPayload
 {
     #[Property(minLength: 3, groups: ['Default'])]
