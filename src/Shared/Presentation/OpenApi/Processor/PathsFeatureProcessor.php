@@ -61,7 +61,7 @@ readonly class PathsFeatureProcessor implements ProcessorInterface
                 && Generator::isDefault($pathItem->patch)
                 && Generator::isDefault($pathItem->delete)) {
                 unset($analysis->openapi->paths[$index]);
-                $analysis->annotations->detach($pathItem);
+                $this->detachAnnotationRecursively($pathItem, $analysis);
             }
         }
     }
