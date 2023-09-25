@@ -11,6 +11,8 @@ use OpenApi\Processors\ProcessorInterface;
 
 readonly class PropertyFeatureProcessor implements ProcessorInterface
 {
+    use ProcessorTrait;
+
     public function __construct(private FeaturePublisherContainer $publishers)
     {
     }
@@ -33,13 +35,7 @@ readonly class PropertyFeatureProcessor implements ProcessorInterface
                     }
                 } catch (FeatureDisabledError) {
                     unset($schema->properties[$i]);
-                    $analysis->annotations->detach($property);
-
-                    if (!Generator::isDefault($property->oneOf)) {
-                        foreach ($property->oneOf as $oneOf) {
-                            $analysis->annotations->detach($oneOf);
-                        }
-                    }
+                    $this->detachAnnotationRecursively($property, $analysis);
                 }
             }
         }

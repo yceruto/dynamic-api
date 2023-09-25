@@ -7,6 +7,8 @@ use OpenApi\Processors\ProcessorInterface;
 
 readonly class CleanUselessSchemaProcessor implements ProcessorInterface
 {
+    use ProcessorTrait;
+
     public function __invoke(Analysis $analysis): void
     {
         foreach ($analysis->openapi->components->schemas as $i => $schema) {
@@ -16,6 +18,7 @@ readonly class CleanUselessSchemaProcessor implements ProcessorInterface
                 }
             }
 
+            $this->detachAnnotationRecursively($schema, $analysis);
             unset($analysis->openapi->components->schemas[$i]);
         }
     }

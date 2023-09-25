@@ -42,6 +42,8 @@ trait ApiRouteTrait
         string $env = null,
         string $publisher = null,
     ) {
+        self::$_blacklist[] = 'route';
+
         parent::__construct(
             $path,
             $name,
