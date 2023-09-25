@@ -25,6 +25,26 @@ class OpenApiValidatorAttributeLoader implements LoaderInterface
                     $loaded = true;
                 }
 
+                if ('email' === $attribute->format) {
+                    $metadata->addPropertyConstraint($property->name, new Assert\Email(groups: $groups));
+                    $loaded = true;
+                }
+
+                if ('password' === $attribute->format) {
+                    $metadata->addPropertyConstraint($property->name, new Assert\PasswordStrength(minScore: Assert\PasswordStrength::STRENGTH_VERY_STRONG, groups: $groups));
+                    $loaded = true;
+                }
+
+                if ('date' === $attribute->format) {
+                    $metadata->addPropertyConstraint($property->name, new Assert\Date(groups: $groups));
+                    $loaded = true;
+                }
+
+                if ('date-time' === $attribute->format) {
+                    $metadata->addPropertyConstraint($property->name, new Assert\DateTime(groups: $groups));
+                    $loaded = true;
+                }
+
                 if (!Generator::isDefault($attribute->minLength) || !Generator::isDefault($attribute->maxLength)) {
                     $metadata->addPropertyConstraint($property->name, new Assert\Length(
                         min: Generator::isDefault($attribute->minLength) ? null : $attribute->minLength,
