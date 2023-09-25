@@ -2,6 +2,9 @@
 
 namespace App\Shared\Presentation\Provider;
 
+/**
+ * Determines the validation & serializer groups for a given object.
+ */
 interface GroupsProvider
 {
     /**

@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+/**
+ * Determines whether a request can be processed or not.
+ */
 readonly class RequestFeatureSubscriber implements EventSubscriberInterface
 {
     public function __construct(private FeaturePublisherContainer $publishers)
@@ -27,10 +30,10 @@ readonly class RequestFeatureSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $endpointPublisher = $this->publishers->get($publisherId);
+        $featurePublisher = $this->publishers->get($publisherId);
 
         try {
-            if (!$endpointPublisher->publish([
+            if (!$featurePublisher->publish([
                 'path_id' => $request->attributes->getString('_route'),
                 'subject' => $request,
             ])) {
