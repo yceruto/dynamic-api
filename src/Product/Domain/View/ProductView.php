@@ -22,7 +22,7 @@ readonly class ProductView
     #[Property(groups: ['Money'], publisher: MoneyFeaturePublisher::class)]
     public MoneyView $price;
 
-    #[Property(enum: [ProductStatus::DRAFT, ProductStatus::PUBLISHED, ProductStatus::ARCHIVED], groups: ['Default'])]
+    #[Property(enum: ProductStatus::class, groups: ['Default'])]
     public string $status;
 
     /**
