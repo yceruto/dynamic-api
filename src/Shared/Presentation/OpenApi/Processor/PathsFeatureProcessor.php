@@ -3,8 +3,8 @@
 namespace App\Shared\Presentation\OpenApi\Processor;
 
 use App\Shared\Domain\Error\FeatureDisabledError;
-use App\Shared\Presentation\OpenApi\Processor\Publisher\FeaturePublisherContainer;
 use App\Shared\Presentation\OpenApi\Routing\Attribute\ApiRouteTrait;
+use App\Shared\Presentation\Publisher\FeaturePublisherContainer;
 use OpenApi\Analysis;
 use OpenApi\Annotations\Operation;
 use OpenApi\Annotations\PathItem;

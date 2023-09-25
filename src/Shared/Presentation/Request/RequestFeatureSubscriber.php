@@ -3,7 +3,7 @@
 namespace App\Shared\Presentation\Request;
 
 use App\Shared\Domain\Error\FeatureDisabledError;
-use App\Shared\Presentation\OpenApi\Processor\Publisher\FeaturePublisherContainer;
+use App\Shared\Presentation\Publisher\FeaturePublisherContainer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;

@@ -5,7 +5,7 @@ namespace App\Shared\Presentation\OpenApi\Processor;
 use OpenApi\Analysis;
 use OpenApi\Processors\ProcessorInterface;
 
-class CleanUselessSchemaProcessor implements ProcessorInterface
+readonly class CleanUselessSchemaProcessor implements ProcessorInterface
 {
     public function __invoke(Analysis $analysis): void
     {
@@ -18,5 +18,10 @@ class CleanUselessSchemaProcessor implements ProcessorInterface
 
             unset($analysis->openapi->components->schemas[$i]);
         }
+    }
+
+    public static function priority(): int
+    {
+        return -100;
     }
 }

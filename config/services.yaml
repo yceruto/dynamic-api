@@ -6,14 +6,20 @@ services:
         autoconfigure: true
 
     _instanceof:
-        App\Shared\Presentation\OpenApi\Processor\Publisher\FeaturePublisher:
-            tags: ['api.endpoint_publisher']
+        App\Shared\Presentation\Publisher\FeaturePublisher:
+            tags: ['api.feature_publisher']
 
         App\Shared\Presentation\Provider\GroupsProvider:
             tags: ['api.groups_provider']
 
         App\Shared\Presentation\OpenApi\Analyser\AttributeFactory:
             tags: ['api.attribute_factory']
+
+        OpenApi\Analysers\AnnotationFactoryInterface:
+            tags: ['api.annotation_factory']
+
+        OpenApi\Processors\ProcessorInterface:
+            tags: ['api.processor']
 
     App\:
         resource: '../src/'

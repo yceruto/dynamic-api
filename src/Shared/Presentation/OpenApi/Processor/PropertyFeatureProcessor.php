@@ -4,7 +4,7 @@ namespace App\Shared\Presentation\OpenApi\Processor;
 
 use App\Shared\Domain\Error\FeatureDisabledError;
 use App\Shared\Presentation\OpenApi\Attributes\Property;
-use App\Shared\Presentation\OpenApi\Processor\Publisher\FeaturePublisherContainer;
+use App\Shared\Presentation\Publisher\FeaturePublisherContainer;
 use OpenApi\Analysis;
 use OpenApi\Generator;
 use OpenApi\Processors\ProcessorInterface;

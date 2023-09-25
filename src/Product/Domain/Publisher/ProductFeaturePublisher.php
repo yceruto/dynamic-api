@@ -2,7 +2,7 @@
 
 namespace App\Product\Domain\Publisher;
 
-use App\Shared\Presentation\OpenApi\Processor\Publisher\FeaturePublisher;
+use App\Shared\Presentation\Publisher\FeaturePublisher;
 
 readonly class ProductFeaturePublisher implements FeaturePublisher
 {

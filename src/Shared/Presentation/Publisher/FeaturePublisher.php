@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Presentation\OpenApi\Processor\Publisher;
+namespace App\Shared\Presentation\Publisher;
 
 /**
  * Determines whether a feature should be published or not.
