@@ -9,6 +9,7 @@ use App\Shared\Presentation\Controller\CommandAction;
 use App\Shared\Presentation\OpenApi\Routing\Attribute\Put;
 use App\Shared\Presentation\Request\Attribute\Path;
 use App\Shared\Presentation\Request\Attribute\Payload;
+use App\Shared\Presentation\Request\Model\MoneyPayload;
 use Money\Currency;
 use Money\Money;
 
@@ -22,12 +23,14 @@ class PutProductAction extends CommandAction
     )]
     public function __invoke(#[Path] string $id, #[Payload] PutProductPayload $payload): ProductView
     {
+        $price = $payload->price ?? MoneyPayload::free();
+
         return $this->commandBus()->execute(new UpdateProductCommand(
             $id,
             $payload->name,
             new Money(
-                $payload->price->amount,
-                new Currency($payload->price->currency,
+                $price->amount,
+                new Currency($price->currency,
             )),
             $payload->status,
         ));
