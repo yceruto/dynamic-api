@@ -2,10 +2,10 @@
 
 namespace App\Product\Application\Find;
 
+use App\Product\Domain\Error\ProductNotFoundError;
 use App\Product\Domain\Model\Product;
 use App\Product\Domain\Model\ProductId;
 use App\Product\Domain\Repository\ProductRepository;
-use DomainException;
 
 readonly class ProductFinder
 {
@@ -15,7 +15,7 @@ readonly class ProductFinder
 
     public function find(ProductId $id): Product
     {
-        return $this->repository->ofId($id) ?? throw new DomainException('Product not found');
+        return $this->repository->ofId($id) ?? throw ProductNotFoundError::create($id);
     }
 
     /**

@@ -18,6 +18,10 @@ framework:
     php_errors:
         log: true
 
+    exceptions:
+        App\Shared\Domain\Error\EntityNotFoundError:
+            status_code: 404
+
 when@test:
     framework:
         test: true
