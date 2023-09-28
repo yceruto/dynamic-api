@@ -18,6 +18,10 @@ class MethodAttributeFactory implements AttributeFactory
         }
 
         foreach ($annotations as $annotation) {
+            if (!$annotation instanceof Operation) {
+                continue;
+            }
+
             if ($annotation instanceof OA\Post || $annotation instanceof OA\Put || $annotation instanceof OA\Patch) {
                 if (Generator::isDefault($annotation->requestBody)) {
                     $this->guessRequestBody($reflector, $context, $annotation);

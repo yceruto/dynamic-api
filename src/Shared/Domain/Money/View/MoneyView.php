@@ -15,7 +15,12 @@ readonly class MoneyView
     }
 
     private function __construct(
-        #[Property(example: 100, groups: ['Money'])]
+        #[Property(
+            description: 'Amount in cents',
+            minimum: 0,
+            example: 100,
+            groups: ['Money'],
+        )]
         public int $amount,
 
         #[Property(example: 'EUR', groups: ['Money'])]
