@@ -2,6 +2,7 @@
 
 namespace App\Product\Domain\Decider;
 
+use App\Shared\Domain\Error\FeatureUnavailableError;
 use App\Shared\Presentation\Decider\FeatureDecider;
 
 readonly class ProductFeatureDecider implements FeatureDecider
@@ -13,7 +14,7 @@ readonly class ProductFeatureDecider implements FeatureDecider
     public function decide(array $context = []): bool
     {
         if (!$this->featureToggle) {
-            return false; //throw new FeatureDisabledError('Product feature is disabled');
+            return false; //throw FeatureUnavailableError::create('Product feature is disabled');
         }
 
         return true;

@@ -2,7 +2,7 @@
 
 namespace App\Shared\Presentation\OpenApi\Processor;
 
-use App\Shared\Domain\Error\FeatureDisabledError;
+use App\Shared\Domain\Error\FeatureUnavailableError;
 use App\Shared\Presentation\Decider\FeatureDeciderContainer;
 use App\Shared\Presentation\OpenApi\Routing\Attribute\ApiRouteTrait;
 use OpenApi\Analysis;
@@ -47,9 +47,9 @@ readonly class PathsFeatureProcessor implements ProcessorInterface
                         'path_item' => $pathItem,
                         'subject' => $method,
                     ])) {
-                        throw new FeatureDisabledError();
+                        throw new FeatureUnavailableError();
                     }
-                } catch (FeatureDisabledError) {
+                } catch (FeatureUnavailableError) {
                     $analysis->openapi->paths[$index]->{$method->method} = Generator::UNDEFINED;
                     $this->detachAnnotationRecursively($method, $analysis);
                 }

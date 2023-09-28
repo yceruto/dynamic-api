@@ -2,7 +2,7 @@
 
 namespace App\Shared\Presentation\OpenApi\Processor;
 
-use App\Shared\Domain\Error\FeatureDisabledError;
+use App\Shared\Domain\Error\FeatureUnavailableError;
 use App\Shared\Presentation\Decider\FeatureDeciderContainer;
 use App\Shared\Presentation\OpenApi\Attributes\Property;
 use OpenApi\Analysis;
@@ -29,10 +29,10 @@ readonly class PropertyFeatureProcessor implements ProcessorInterface
                 }
 
                 try {
-                    if (!$this->deciders->get($deciderId)->decide(['subject' => $property])) {
-                        throw new FeatureDisabledError();
+                    if (false === $this->deciders->get($deciderId)->decide(['subject' => $property])) {
+                        throw new FeatureUnavailableError();
                     }
-                } catch (FeatureDisabledError) {
+                } catch (FeatureUnavailableError) {
                     unset($schema->properties[$i]);
                     $this->detachAnnotationRecursively($property, $analysis);
                 }

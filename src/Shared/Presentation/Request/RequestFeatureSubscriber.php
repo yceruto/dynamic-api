@@ -2,7 +2,7 @@
 
 namespace App\Shared\Presentation\Request;
 
-use App\Shared\Domain\Error\FeatureDisabledError;
+use App\Shared\Domain\Error\FeatureUnavailableError;
 use App\Shared\Presentation\Decider\FeatureDeciderContainer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,9 +37,9 @@ readonly class RequestFeatureSubscriber implements EventSubscriberInterface
                 'path_id' => $request->attributes->getString('_route'),
                 'subject' => $request,
             ])) {
-                $event->setResponse(new JsonResponse(['message' => 'Endpoint is disabled'], 400));
+                $event->setResponse(new JsonResponse(['message' => 'Endpoint is unavailable'], 400));
             }
-        } catch (FeatureDisabledError $e) {
+        } catch (FeatureUnavailableError $e) {
             $event->setResponse(new JsonResponse(['message' => $e->getMessage()], 400));
         }
     }
