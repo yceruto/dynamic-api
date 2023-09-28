@@ -4,10 +4,10 @@ namespace App\Product\Presentation\Controller\Post;
 
 use App\Product\Domain\Model\ProductStatus;
 use App\Product\Domain\Provider\ProductGroupsProvider;
-use App\Shared\Domain\Decider\MoneyFeatureDecider;
+use App\Shared\Domain\Money\Decider\MoneyFeatureDecider;
 use App\Shared\Presentation\OpenApi\Attributes\Property;
 use App\Shared\Presentation\OpenApi\Attributes\Schema;
-use App\Shared\Presentation\Request\Model\MoneyPayload;
+use App\Shared\Presentation\Request\Money\MoneyPayload;
 
 #[Schema(groupsProvider: ProductGroupsProvider::class)]
 class PostProductPayload

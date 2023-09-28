@@ -10,7 +10,7 @@ use OpenApi\Annotations\Operation;
 use OpenApi\Generator;
 use OpenApi\Processors\ProcessorInterface;
 
-readonly class PathsFeatureProcessor implements ProcessorInterface
+readonly class PathFeatureProcessor implements ProcessorInterface
 {
     use ProcessorTrait;
 

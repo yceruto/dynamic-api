@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Domain\Decider;
+namespace App\Shared\Domain\Money\Decider;
 
 use App\Shared\Presentation\Decider\FeatureDecider;
 

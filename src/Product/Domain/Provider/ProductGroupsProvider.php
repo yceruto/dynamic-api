@@ -2,7 +2,7 @@
 
 namespace App\Product\Domain\Provider;
 
-use App\Shared\Domain\Decider\MoneyFeatureDecider;
+use App\Shared\Domain\Money\Decider\MoneyFeatureDecider;
 use App\Shared\Presentation\Provider\GroupsProvider;
 
 readonly class ProductGroupsProvider implements GroupsProvider

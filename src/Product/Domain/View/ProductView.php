@@ -5,8 +5,8 @@ namespace App\Product\Domain\View;
 use App\Product\Domain\Model\Product;
 use App\Product\Domain\Model\ProductStatus;
 use App\Product\Domain\Provider\ProductGroupsProvider;
-use App\Shared\Domain\Decider\MoneyFeatureDecider;
-use App\Shared\Domain\View\MoneyView;
+use App\Shared\Domain\Money\Decider\MoneyFeatureDecider;
+use App\Shared\Domain\Money\View\MoneyView;
 use App\Shared\Presentation\OpenApi\Attributes\Property;
 use App\Shared\Presentation\OpenApi\Attributes\Schema;
 
@@ -46,7 +46,7 @@ readonly class ProductView
     {
         $this->id = $product->id()->value();
         $this->name = $product->name();
-        $this->price = MoneyView::create($product->price());
+        $this->price = MoneyView::fromMoney($product->price());
         $this->status = $product->status()->value;
     }
 }

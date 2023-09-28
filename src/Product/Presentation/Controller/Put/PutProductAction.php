@@ -9,7 +9,7 @@ use App\Shared\Presentation\Controller\CommandAction;
 use App\Shared\Presentation\OpenApi\Attributes\Path;
 use App\Shared\Presentation\OpenApi\Attributes\Payload;
 use App\Shared\Presentation\OpenApi\Routing\Attribute\Put;
-use App\Shared\Presentation\Request\Model\MoneyPayload;
+use App\Shared\Presentation\Request\Money\MoneyPayload;
 use Money\Currency;
 use Money\Money;
 

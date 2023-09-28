@@ -8,7 +8,7 @@ use App\Product\Domain\View\ProductView;
 use App\Shared\Presentation\Controller\CommandAction;
 use App\Shared\Presentation\OpenApi\Attributes\Payload;
 use App\Shared\Presentation\OpenApi\Routing\Attribute\Post;
-use App\Shared\Presentation\Request\Model\MoneyPayload;
+use App\Shared\Presentation\Request\Money\MoneyPayload;
 use Money\Currency;
 use Money\Money;
 use Symfony\Component\Uid\Uuid;

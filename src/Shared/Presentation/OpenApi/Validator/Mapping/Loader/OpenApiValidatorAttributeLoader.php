@@ -45,6 +45,11 @@ class OpenApiValidatorAttributeLoader implements LoaderInterface
                     $loaded = true;
                 }
 
+                if ('currency' === $attribute->format) {
+                    $metadata->addPropertyConstraint($property->name, new Assert\Currency(groups: $groups));
+                    $loaded = true;
+                }
+
                 if (!Generator::isDefault($attribute->minLength) || !Generator::isDefault($attribute->maxLength)) {
                     $metadata->addPropertyConstraint($property->name, new Assert\Length(
                         min: Generator::isDefault($attribute->minLength) ? null : $attribute->minLength,

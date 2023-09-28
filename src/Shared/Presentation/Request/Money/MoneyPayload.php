@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Presentation\Request\Model;
+namespace App\Shared\Presentation\Request\Money;
 
 use App\Shared\Presentation\OpenApi\Attributes\Property;
 use App\Shared\Presentation\OpenApi\Attributes\Schema;
@@ -13,9 +13,13 @@ class MoneyPayload
     #[Assert\PositiveOrZero(groups: ['Money'])]
     public int $amount;
 
-    #[Property(example: 'EUR', groups: ['Money'])]
-    #[Assert\NotBlank(groups: ['Money'])]
-    #[Assert\Currency(groups: ['Money'])]
+    #[Property(
+        format: 'currency',
+        maxLength: 3,
+        minLength: 3,
+        example: 'EUR',
+        groups: ['Money'],
+    )]
     public string $currency;
 
     public static function free(): self
