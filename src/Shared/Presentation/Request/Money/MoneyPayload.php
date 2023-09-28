@@ -22,11 +22,11 @@ class MoneyPayload
     )]
     public string $currency;
 
-    public static function free(): self
+    public static function free(string $currency = 'EUR'): self
     {
         $payload = new self();
         $payload->amount = 0;
-        $payload->currency = 'EUR';
+        $payload->currency = $currency;
 
         return $payload;
     }
