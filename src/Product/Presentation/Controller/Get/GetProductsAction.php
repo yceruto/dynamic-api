@@ -26,7 +26,7 @@ class GetProductsAction extends QueryAction
                     type: 'array',
                     items: new Items(type: ProductView::class),
                 ),
-            )
+            ),
         ],
         decider:  ProductFeatureDecider::class,
     )]
