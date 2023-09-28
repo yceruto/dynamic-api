@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Product\Domain\Publisher;
+namespace App\Product\Domain\Decider;
 
-use App\Shared\Domain\Error\FeatureDisabledError;
-use App\Shared\Presentation\Publisher\FeaturePublisher;
+use App\Shared\Presentation\Decider\FeatureDecider;
 
-readonly class ProductFeaturePublisher implements FeaturePublisher
+readonly class ProductFeatureDecider implements FeatureDecider
 {
     public function __construct(private bool $featureToggle = true)
     {

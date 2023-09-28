@@ -3,7 +3,7 @@
 namespace App\Product\Presentation\Controller\Post;
 
 use App\Product\Application\Create\CreateProductCommand;
-use App\Product\Domain\Publisher\ProductFeaturePublisher;
+use App\Product\Domain\Decider\ProductFeatureDecider;
 use App\Product\Domain\View\ProductView;
 use App\Shared\Presentation\Controller\CommandAction;
 use App\Shared\Presentation\OpenApi\Attributes\Payload;
@@ -19,7 +19,7 @@ class PostProductAction extends CommandAction
         path: '/products',
         summary: 'Create a new product',
         tags: ['Product'],
-        publisher:  ProductFeaturePublisher::class,
+        decider:  ProductFeatureDecider::class,
     )]
     public function __invoke(#[Payload] PostProductPayload $payload): ProductView
     {

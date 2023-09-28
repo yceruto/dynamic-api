@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Shared\Presentation\Publisher;
+namespace App\Shared\Presentation\Decider;
 
 /**
  * Determines whether a feature should be published or not.
  */
-interface FeaturePublisher
+interface FeatureDecider
 {
     public function publish(array $context = []): bool;
 }

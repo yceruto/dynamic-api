@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Shared\Domain\Publisher;
+namespace App\Shared\Domain\Decider;
 
-use App\Shared\Presentation\Publisher\FeaturePublisher;
+use App\Shared\Presentation\Decider\FeatureDecider;
 
-readonly class MoneyFeaturePublisher implements FeaturePublisher
+readonly class MoneyFeatureDecider implements FeatureDecider
 {
     public function __construct(private bool $featureToggle = true)
     {

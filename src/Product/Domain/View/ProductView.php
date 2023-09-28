@@ -5,7 +5,7 @@ namespace App\Product\Domain\View;
 use App\Product\Domain\Model\Product;
 use App\Product\Domain\Model\ProductStatus;
 use App\Product\Domain\Provider\ProductGroupsProvider;
-use App\Shared\Domain\Publisher\MoneyFeaturePublisher;
+use App\Shared\Domain\Decider\MoneyFeatureDecider;
 use App\Shared\Domain\View\MoneyView;
 use App\Shared\Presentation\OpenApi\Attributes\Property;
 use App\Shared\Presentation\OpenApi\Attributes\Schema;
@@ -19,7 +19,7 @@ readonly class ProductView
     #[Property(groups: ['Default'])]
     public string $name;
 
-    #[Property(groups: ['Money'], publisher: MoneyFeaturePublisher::class)]
+    #[Property(groups: ['Money'], decider: MoneyFeatureDecider::class)]
     public MoneyView $price;
 
     #[Property(enum: ProductStatus::class, groups: ['Default'])]

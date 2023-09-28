@@ -3,7 +3,7 @@
 namespace App\Product\Presentation\Controller\Get;
 
 use App\Product\Application\Find\Search\SearchProductsQuery;
-use App\Product\Domain\Publisher\ProductFeaturePublisher;
+use App\Product\Domain\Decider\ProductFeatureDecider;
 use App\Product\Domain\View\ProductView;
 use App\Shared\Presentation\Controller\QueryAction;
 use App\Shared\Presentation\OpenApi\Attributes\Query;
@@ -28,7 +28,7 @@ class GetProductsAction extends QueryAction
                 ),
             )
         ],
-        publisher:  ProductFeaturePublisher::class,
+        decider:  ProductFeatureDecider::class,
     )]
     public function __invoke(#[Query] GetProductsFilter $filter): array
     {

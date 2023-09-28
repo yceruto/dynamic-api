@@ -6,8 +6,8 @@ services:
         autoconfigure: true
 
     _instanceof:
-        App\Shared\Presentation\Publisher\FeaturePublisher:
-            tags: ['api.feature_publisher']
+        App\Shared\Presentation\Decider\FeatureDecider:
+            tags: ['api.feature_decider']
 
         App\Shared\Presentation\Provider\GroupsProvider:
             tags: ['api.groups_provider']

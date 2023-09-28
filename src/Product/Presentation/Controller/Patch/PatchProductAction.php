@@ -4,7 +4,7 @@ namespace App\Product\Presentation\Controller\Patch;
 
 use App\Product\Application\Find\One\FindProductQuery;
 use App\Product\Application\Update\UpdateProductCommand;
-use App\Product\Domain\Publisher\ProductFeaturePublisher;
+use App\Product\Domain\Decider\ProductFeatureDecider;
 use App\Product\Domain\View\ProductView;
 use App\Shared\Presentation\Controller\ApiAction;
 use App\Shared\Presentation\OpenApi\Attributes\Path;
@@ -19,7 +19,7 @@ class PatchProductAction extends ApiAction
         path: '/products/{id}',
         summary: 'Patch a product',
         tags: ['Product'],
-        publisher:  ProductFeaturePublisher::class,
+        decider:  ProductFeatureDecider::class,
     )]
     public function __invoke(#[Path] string $id, #[Payload] PatchProductPayload $payload): ProductView
     {

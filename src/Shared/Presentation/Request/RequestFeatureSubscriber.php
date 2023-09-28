@@ -3,7 +3,7 @@
 namespace App\Shared\Presentation\Request;
 
 use App\Shared\Domain\Error\FeatureDisabledError;
-use App\Shared\Presentation\Publisher\FeaturePublisherContainer;
+use App\Shared\Presentation\Decider\FeatureDeciderContainer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 readonly class RequestFeatureSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private FeaturePublisherContainer $publishers)
+    public function __construct(private FeatureDeciderContainer $deciders)
     {
     }
 
@@ -26,14 +26,14 @@ readonly class RequestFeatureSubscriber implements EventSubscriberInterface
 
         $request = $event->getRequest();
 
-        if (!$publisherId = $request->attributes->getString('_publisher')) {
+        if (!$deciderId = $request->attributes->getString('_decider')) {
             return;
         }
 
-        $featurePublisher = $this->publishers->get($publisherId);
+        $featureDecider = $this->deciders->get($deciderId);
 
         try {
-            if (!$featurePublisher->publish([
+            if (!$featureDecider->publish([
                 'path_id' => $request->attributes->getString('_route'),
                 'subject' => $request,
             ])) {

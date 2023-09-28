@@ -3,8 +3,8 @@
 namespace App\Shared\Presentation\OpenApi\Processor;
 
 use App\Shared\Domain\Error\FeatureDisabledError;
+use App\Shared\Presentation\Decider\FeatureDeciderContainer;
 use App\Shared\Presentation\OpenApi\Routing\Attribute\ApiRouteTrait;
-use App\Shared\Presentation\Publisher\FeaturePublisherContainer;
 use OpenApi\Analysis;
 use OpenApi\Annotations\Operation;
 use OpenApi\Generator;
@@ -14,7 +14,7 @@ readonly class PathsFeatureProcessor implements ProcessorInterface
 {
     use ProcessorTrait;
 
-    public function __construct(private FeaturePublisherContainer $publishers)
+    public function __construct(private FeatureDeciderContainer $deciders)
     {
     }
 
@@ -35,14 +35,14 @@ readonly class PathsFeatureProcessor implements ProcessorInterface
                     continue;
                 }
 
-                if (!$publisherId = $method->route->getDefaults()['_publisher'] ?? '') {
+                if (!$deciderId = $method->route->getDefaults()['_decider'] ?? '') {
                     continue;
                 }
 
-                $featurePublisher = $this->publishers->get($publisherId);
+                $featureDecider = $this->deciders->get($deciderId);
 
                 try {
-                    if (!$featurePublisher->publish([
+                    if (!$featureDecider->publish([
                         'path_id' => $method->operationId,
                         'path_item' => $pathItem,
                         'subject' => $method,
