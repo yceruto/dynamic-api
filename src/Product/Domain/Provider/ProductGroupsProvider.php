@@ -13,7 +13,7 @@ readonly class ProductGroupsProvider implements GroupsProvider
 
     public function groups(object $object): array
     {
-        if ($this->decider->publish(['subject' => $object])) {
+        if ($this->decider->decide(['subject' => $object])) {
             return ['Default', 'Money'];
         }
 

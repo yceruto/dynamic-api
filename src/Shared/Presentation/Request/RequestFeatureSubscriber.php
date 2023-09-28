@@ -33,7 +33,7 @@ readonly class RequestFeatureSubscriber implements EventSubscriberInterface
         $featureDecider = $this->deciders->get($deciderId);
 
         try {
-            if (!$featureDecider->publish([
+            if (!$featureDecider->decide([
                 'path_id' => $request->attributes->getString('_route'),
                 'subject' => $request,
             ])) {

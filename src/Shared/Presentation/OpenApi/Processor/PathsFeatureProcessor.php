@@ -42,7 +42,7 @@ readonly class PathsFeatureProcessor implements ProcessorInterface
                 $featureDecider = $this->deciders->get($deciderId);
 
                 try {
-                    if (!$featureDecider->publish([
+                    if (!$featureDecider->decide([
                         'path_id' => $method->operationId,
                         'path_item' => $pathItem,
                         'subject' => $method,

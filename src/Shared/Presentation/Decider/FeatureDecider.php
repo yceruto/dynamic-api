@@ -3,9 +3,9 @@
 namespace App\Shared\Presentation\Decider;
 
 /**
- * Determines whether a feature should be published or not.
+ * Decides whether a feature should be available or not.
  */
 interface FeatureDecider
 {
-    public function publish(array $context = []): bool;
+    public function decide(array $context = []): bool;
 }

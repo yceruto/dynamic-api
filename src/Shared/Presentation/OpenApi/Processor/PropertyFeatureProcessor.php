@@ -29,7 +29,7 @@ readonly class PropertyFeatureProcessor implements ProcessorInterface
                 }
 
                 try {
-                    if (!$this->deciders->get($deciderId)->publish(['subject' => $property])) {
+                    if (!$this->deciders->get($deciderId)->decide(['subject' => $property])) {
                         throw new FeatureDisabledError();
                     }
                 } catch (FeatureDisabledError) {

@@ -10,7 +10,7 @@ readonly class MoneyFeatureDecider implements FeatureDecider
     {
     }
 
-    public function publish(array $context = []): bool
+    public function decide(array $context = []): bool
     {
         return $this->featureToggle;
     }
