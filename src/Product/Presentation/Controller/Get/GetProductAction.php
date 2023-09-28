@@ -6,8 +6,8 @@ use App\Product\Application\Find\One\FindProductQuery;
 use App\Product\Domain\Publisher\ProductFeaturePublisher;
 use App\Product\Domain\View\ProductView;
 use App\Shared\Presentation\Controller\QueryAction;
+use App\Shared\Presentation\OpenApi\Attributes\Path;
 use App\Shared\Presentation\OpenApi\Routing\Attribute\Get;
-use App\Shared\Presentation\Request\Attribute\Path;
 
 class GetProductAction extends QueryAction
 {

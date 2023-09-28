@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Presentation\Request\Attribute;
+namespace App\Shared\Presentation\OpenApi\Attributes;
 
 use App\Shared\Presentation\Controller\ArgumentResolver\PayloadValueResolver;
 use Symfony\Component\HttpKernel\Attribute\ValueResolver;

@@ -2,8 +2,8 @@
 
 namespace App\Shared\Presentation\Controller\ArgumentResolver;
 
+use App\Shared\Presentation\OpenApi\Attributes\Payload;
 use App\Shared\Presentation\Provider\GroupsResolver;
-use App\Shared\Presentation\Request\Attribute\Payload;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
