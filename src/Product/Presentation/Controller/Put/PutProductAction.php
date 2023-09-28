@@ -21,7 +21,7 @@ class PutProductAction extends CommandAction
         tags: ['Product'],
         decider:  ProductFeatureDecider::class,
     )]
-    public function __invoke(#[Path] string $id, #[Payload] PutProductPayload $payload): ProductView
+    public function __invoke(#[Path(format: 'uuid')] string $id, #[Payload] PutProductPayload $payload): ProductView
     {
         $price = $payload->price ?? MoneyPayload::free();
 

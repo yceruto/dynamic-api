@@ -16,7 +16,7 @@ class DeleteProductAction extends CommandAction
         tags: ['Product'],
         decider:  ProductFeatureDecider::class,
     )]
-    public function __invoke(#[Path] string $id): void
+    public function __invoke(#[Path(format: 'uuid')] string $id): void
     {
         $this->commandBus()->execute(new DeleteProductCommand($id));
     }

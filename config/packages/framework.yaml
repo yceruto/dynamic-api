@@ -21,6 +21,8 @@ framework:
     exceptions:
         App\Shared\Domain\Error\EntityNotFoundError:
             status_code: 404
+        Symfony\Component\Validator\Exception\ValidationFailedException:
+            status_code: 422
 
 when@test:
     framework:

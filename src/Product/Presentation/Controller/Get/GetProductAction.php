@@ -17,7 +17,7 @@ class GetProductAction extends QueryAction
         tags: ['Product'],
         decider:  ProductFeatureDecider::class,
     )]
-    public function __invoke(#[Path] string $id): ProductView
+    public function __invoke(#[Path(format: 'uuid')] string $id): ProductView
     {
         return $this->queryBus()->ask(new FindProductQuery($id));
     }

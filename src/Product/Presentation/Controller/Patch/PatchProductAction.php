@@ -21,7 +21,7 @@ class PatchProductAction extends ApiAction
         tags: ['Product'],
         decider:  ProductFeatureDecider::class,
     )]
-    public function __invoke(#[Path] string $id, #[Payload] PatchProductPayload $payload): ProductView
+    public function __invoke(#[Path(format: 'uuid')] string $id, #[Payload] PatchProductPayload $payload): ProductView
     {
         /** @var ProductView $product */
         $product = $this->queryBus()->ask(new FindProductQuery($id));
